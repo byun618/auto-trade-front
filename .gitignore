@@ -1,0 +1,19 @@
+# Compiled binary addons (http://nodejs.org/api/addons.html)
+dist
+
+# Dependency directories
+node_modules
+
+# Optional npm cache directory
+.npm
+
+.env
+
+*.secret.yaml
+
+samples.ts
+
+# http extention
+*.http
+
+.DS_Store
