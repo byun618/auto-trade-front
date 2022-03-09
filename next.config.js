@@ -5,6 +5,6 @@ const nextConfig = {
     reactRoot: true,
   },
   swcMinify: true,
-};
+}
 
-module.exports = nextConfig;
+module.exports = nextConfig
