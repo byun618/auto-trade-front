@@ -76,7 +76,7 @@ export default function Navbar() {
   )
 
   return (
-    <nav className="navbar bg-primary">
+    <nav className="navbar bg-info">
       <Container>
         <Logo onClick={() => goPage('/')}>Auto Trade</Logo>
         <Content>
