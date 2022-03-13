@@ -15,23 +15,10 @@ const SocketProvider: React.FC = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null)
 
   const connectSocket = () => {
-    try {
-      const url = String(process.env.NEXT_PUBLIC_API_URL)
-      const tempSocket = socketIOClient(url)
-      setSocket(tempSocket)
-    } catch (err) {
-      console.log(err)
-      alert(`채팅서버 연결에 실패했습니다. ${err}`)
-    }
+    const tempSocket = socketIOClient(String(process.env.NEXT_PUBLIC_API_URL))
+
+    setSocket(tempSocket)
   }
-
-  useEffect(() => {
-    if (!socket) return
-
-    return () => {
-      socket.disconnect()
-    }
-  }, [socket])
 
   return (
     <SocketContext.Provider value={{ socket, connectSocket }}>

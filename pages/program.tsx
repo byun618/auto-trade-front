@@ -4,11 +4,19 @@ import Page from '../components/public/Page'
 import { useSocket } from '../contexts/socket'
 
 const Program: NextPage = () => {
-  const { connectSocket } = useSocket()
+  const { socket, connectSocket } = useSocket()
 
   useEffect(() => {
     connectSocket()
   }, [])
+
+  useEffect(() => {
+    if (!socket) return
+
+    return () => {
+      socket.disconnect()
+    }
+  }, [socket])
 
   return (
     <Page>
