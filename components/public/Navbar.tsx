@@ -71,7 +71,7 @@ const NavBar = () => {
       <Container>
         <Logo onClick={() => goPage('/')}>Auto Trade</Logo>
         <Content>
-          {/* <Button onClick={() => goPage('/review')}>리뷰</Button> */}
+          <Button onClick={() => goPage('/program')}>프로그램</Button>
         </Content>
         <Footer>
           <Button onClick={() => goPage('/login')}>로그인</Button>
