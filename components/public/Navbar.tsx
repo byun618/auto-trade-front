@@ -56,7 +56,7 @@ const Footer = styled.div`
   }
 `
 
-const NavBar = () => {
+export default function NavBar() {
   const router = useRouter()
 
   const goPage = useCallback(
@@ -80,5 +80,3 @@ const NavBar = () => {
     </nav>
   )
 }
-
-export default NavBar

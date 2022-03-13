@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
-import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { ReactNode, useEffect } from 'react'
 import { LAYOUT_PADDING_HORIZONTAL } from '../../lib/constants'
 import NavBar from './Navbar'
 
@@ -17,7 +16,7 @@ const Content = styled.div`
   padding: 0 ${LAYOUT_PADDING_HORIZONTAL}vw;
 `
 
-const Page: NextPage = ({ children }) => {
+export default function Page({ children }: { children: ReactNode }) {
   const router = useRouter()
 
   useEffect(() => {
@@ -38,5 +37,3 @@ const Page: NextPage = ({ children }) => {
     </Wrapper>
   )
 }
-
-export default Page
