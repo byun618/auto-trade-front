@@ -17,7 +17,7 @@ const Wrapper = styled.button`
   align-items: center;
   background-color: transparent;
 
-  border-width: 0px;
+  border: none;
   padding: 0;
   margin: 0;
 

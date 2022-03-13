@@ -17,6 +17,10 @@ const SocketProvider: React.FC = ({ children }) => {
   const connectSocket = () => {
     const tempSocket = socketIOClient(String(process.env.NEXT_PUBLIC_API_URL))
 
+    tempSocket.on('info', (data) => {
+      console.log(data)
+    })
+
     setSocket(tempSocket)
   }
 

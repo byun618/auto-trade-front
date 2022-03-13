@@ -9,9 +9,12 @@ const _Input = styled.input`
   border-radius: 0;
   border-bottom: 1px solid #e0e0e0;
   padding: 6px 0;
-  font-weight: 600;
+  width: 100px;
+
   font-size: 16px;
   line-height: 22px;
+  font-weight: 500;
+  text-align: center;
 
   &:focus {
     outline: none;
@@ -33,7 +36,7 @@ const Right = styled.div`
 `
 
 // TODO: any 나중에 수정할 것
-export default function Input(props: any) {
+export default function SettingInput(props: any) {
   return (
     <Wrapper>
       <_Input {...props} ref={props.inputRef} />
