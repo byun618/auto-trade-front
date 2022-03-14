@@ -1,39 +1,69 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
-import { ReactNode, useEffect } from 'react'
-import { LAYOUT_PADDING_HORIZONTAL } from '../../lib/constants'
-import NavBar from './Navbar'
+import { NextRouter } from 'next/router'
+import { ReactNode, useRef } from 'react'
+import { DEFAULT_MARGIN } from '../../lib/constants'
+import Header, { HeaderButtonTypes } from '../public/Header'
+
+interface PageProps {
+  router?: NextRouter
+  headerTitle: string
+  headerLeft?: HeaderButtonTypes
+  headerRight?: HeaderButtonTypes
+  noHeader?: boolean
+  full?: boolean
+  children: ReactNode
+  backgroundColor?: string
+}
+
+type ContentProps = Partial<PageProps> & { headerHeight?: any }
 
 const Wrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  min-width: 100vw;
 `
 
-const Content = styled.div`
+const Content = styled.div<ContentProps>`
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  padding: 0 ${LAYOUT_PADDING_HORIZONTAL}vw;
+  padding: ${({ full }) => (full ? 0 : DEFAULT_MARGIN)}vw;
+  margin-top: ${({ headerHeight }) => headerHeight}px;
+  margin-bottom: ${DEFAULT_MARGIN}vw;
+  background-color: ${({ backgroundColor }) => backgroundColor};
 `
 
-export default function Page({ children }: { children: ReactNode }) {
-  const router = useRouter()
-
-  useEffect(() => {
-    // 아래 예시 코드를 참조하여
-    // auth를 확인하는 코드를 작성하고 사용하세요.
-
-    const isLogined = true
-
-    if (!isLogined) {
-      router.replace('/login')
-    }
-  })
+export default function Page({
+  router,
+  headerTitle,
+  headerLeft,
+  headerRight,
+  noHeader = false,
+  full = false,
+  children,
+  backgroundColor = '#fff',
+}: PageProps) {
+  const headerRef = useRef<HTMLInputElement>(null)
 
   return (
     <Wrapper>
-      <NavBar />
-      <Content>{children}</Content>
+      {!noHeader && (
+        <Header
+          router={router}
+          title={headerTitle}
+          left={headerLeft}
+          right={headerRight}
+          headerRef={headerRef}
+        />
+      )}
+      <Content
+        headerHeight={headerRef.current?.clientHeight ?? 44}
+        full={full}
+        backgroundColor={backgroundColor}
+      >
+        {children}
+      </Content>
     </Wrapper>
   )
 }
