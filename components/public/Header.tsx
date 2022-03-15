@@ -7,9 +7,9 @@ import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
 import Button from './Button'
 import Image from './Image'
 
-export type HeaderButtonTypes = 'back' | 'plus'
-
 const BUTTON_IMAGE_SIZE = 19
+
+export type HeaderButtonTypes = 'back' | 'plus'
 
 interface HeaderProps {
   router: NextRouter

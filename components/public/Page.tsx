@@ -30,7 +30,7 @@ const Content = styled.div<ContentProps>`
   flex-grow: 1;
   padding: ${({ full }) => (full ? 0 : DEFAULT_MARGIN)}vw;
   margin-top: ${({ headerHeight }) => headerHeight}px;
-  margin-bottom: ${DEFAULT_MARGIN}vw;
+  // margin-bottom: ${DEFAULT_MARGIN}vw;
   background-color: ${({ backgroundColor }) => backgroundColor};
 `
 

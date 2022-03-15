@@ -14,12 +14,17 @@ const SocketContext = createContext(defaultValue)
 const SocketProvider: React.FC = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null)
 
-  const connectSocket = () => {
-    const tempSocket = socketIOClient(String(process.env.NEXT_PUBLIC_API_URL))
-
-    tempSocket.on('info', (data) => {
-      console.log(data)
+  const connectSocket = (identifier: string) => {
+    const tempSocket = socketIOClient(String(process.env.NEXT_PUBLIC_API_URL), {
+      query: {
+        identifier,
+      },
+      transports: ['websocket'],
     })
+
+    // tempSocket.on('info', (data) => {
+    //   console.log(data)
+    // })
 
     setSocket(tempSocket)
   }
