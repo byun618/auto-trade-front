@@ -42,7 +42,7 @@ export default function Page({
   noHeader = false,
   full = false,
   children,
-  backgroundColor = '#fff',
+  backgroundColor = '#f1f1f1',
 }: PageProps) {
   const headerRef = useRef<HTMLInputElement>(null)
 
