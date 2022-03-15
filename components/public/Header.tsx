@@ -1,12 +1,18 @@
 import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
 import { RefObject } from 'react'
+import Arrow from '../../assets/png/arrow.png'
+import Plus from '../../assets/png/plus.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
+import Button from './Button'
+import Image from './Image'
 
-export type HeaderButtonTypes = 'back' | 'option' | 'home' | 'notice'
+export type HeaderButtonTypes = 'back' | 'plus'
+
+const BUTTON_IMAGE_SIZE = 19
 
 interface HeaderProps {
-  router?: NextRouter
+  router: NextRouter
   title: string
   left?: HeaderButtonTypes
   right?: HeaderButtonTypes
@@ -31,6 +37,16 @@ const Wrapper = styled.div`
   padding: 0 ${DEFAULT_MARGIN}vw;
 `
 
+const HeaderContent = styled.div`
+  min-width: 25%;
+  display: flex;
+  align-items: center;
+`
+
+const Left = styled(HeaderContent)`
+  justify-content: flex-start;
+`
+
 const Center = styled.div`
   flex-grow: 1;
   justify-content: center;
@@ -43,6 +59,17 @@ const Center = styled.div`
   color: #000;
 `
 
+const Right = styled(HeaderContent)`
+  justify-content: flex-end;
+`
+
+const HeaderButton = styled(Button)`
+  padding: 2vw;
+  color: #333;
+  display: flex;
+  flex-direction: row;
+`
+
 export default function Header({
   router,
   title,
@@ -50,9 +77,47 @@ export default function Header({
   right,
   headerRef,
 }: HeaderProps) {
+  const onPressBack = () => {
+    router.back()
+  }
+
+  const onPressPlus = () => {
+    alert('plus')
+  }
+
+  const renderButtons = (type: HeaderButtonTypes) => {
+    switch (type) {
+      case 'back':
+        return (
+          <HeaderButton onClick={onPressBack}>
+            <Image
+              src={Arrow}
+              alt="arrow-left"
+              width={BUTTON_IMAGE_SIZE}
+              height={BUTTON_IMAGE_SIZE}
+            />
+          </HeaderButton>
+        )
+      case 'plus':
+        return (
+          <HeaderButton onClick={onPressPlus}>
+            <Image
+              src={Plus}
+              // src={'https://static.upbit.com/logos/BTC.png'}
+              alt="plus"
+              width={BUTTON_IMAGE_SIZE}
+              height={BUTTON_IMAGE_SIZE}
+            />
+          </HeaderButton>
+        )
+    }
+  }
+
   return (
     <Wrapper ref={headerRef}>
+      <Left>{left && renderButtons(left)}</Left>
       <Center>{title}</Center>
+      <Right>{right && renderButtons(right)}</Right>
     </Wrapper>
   )
 }

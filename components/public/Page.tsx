@@ -5,7 +5,7 @@ import { DEFAULT_MARGIN } from '../../lib/constants'
 import Header, { HeaderButtonTypes } from '../public/Header'
 
 interface PageProps {
-  router?: NextRouter
+  router: NextRouter
   headerTitle: string
   headerLeft?: HeaderButtonTypes
   headerRight?: HeaderButtonTypes

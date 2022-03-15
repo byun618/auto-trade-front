@@ -1,12 +1,14 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import Page from '../components/public/Page'
 import { useSocket } from '../contexts/socket'
 import styles from '../styles/Home.module.css'
 
 const Home: NextPage = () => {
+  const router = useRouter()
   // const { socket, connectSocket } = useSocket()
 
   // useEffect(() => {
@@ -22,7 +24,7 @@ const Home: NextPage = () => {
   // }, [socket])
 
   return (
-    <Page headerTitle="홈">
+    <Page router={router} headerLeft="back" headerTitle="홈" headerRight="plus">
       <h1>Home</h1>
     </Page>
   )

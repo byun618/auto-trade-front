@@ -1,7 +1,7 @@
 /**
  * NATIVE의 스크린 헤더 높이
  */
-export const HEADER_HEIGHT: number = 44
+export const HEADER_HEIGHT: number = 50
 
 /**
  * 로딩 GIF의 기본 사이즈
