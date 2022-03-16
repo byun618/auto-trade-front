@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
-import { useEffect, useMemo } from 'react'
-import { useSocket } from '../contexts/socket'
-import Button from './public/Button'
-import Image from './public/Image'
+import { useMemo } from 'react'
+import { useSocket } from '../../contexts/socket'
+import Button from '../public/Button'
+import Image from '../public/Image'
 
 const TICKER_IMAGE_SIZE = 33
 
-interface MyTickerProps {
+interface TickerProps {
   ticker: string
   start: number
   elapse: number
@@ -14,9 +14,10 @@ interface MyTickerProps {
   isHold: boolean
   isSell: boolean
   ror?: number
+  onClick: Function
 }
 
-type TargetPriceProps = Partial<MyTickerProps> & {
+type TargetPriceProps = Partial<TickerProps> & {
   statusColor?: string
   isPositive?: boolean
 }
@@ -109,7 +110,7 @@ const Ror = styled.div<TargetPriceProps>`
   margin-left: 4px;
 `
 
-export default function MyTicker({
+export default function Ticker({
   ticker,
   start,
   elapse,
@@ -117,20 +118,9 @@ export default function MyTicker({
   isHold,
   isSell,
   ror,
-}: MyTickerProps) {
+  onClick,
+}: TickerProps) {
   const { socket, connectSocket } = useSocket()
-
-  useEffect(() => {
-    connectSocket(`${ticker}-${start}-${elapse}`)
-  }, [])
-
-  useEffect(() => {
-    if (!socket) return
-
-    return () => {
-      socket.disconnect()
-    }
-  }, [socket])
 
   const status = useMemo(() => {
     if (!targetPrice) return '대기중'
@@ -158,11 +148,11 @@ export default function MyTicker({
     }
   }, [ror])
 
-  const onClick = () => {
-    if (!socket) return
+  // const onClick = () => {
+  //   if (!socket) return
 
-    socket.emit('info', { ticker, start, elapse })
-  }
+  //   socket.emit('info', { ticker, start, elapse })
+  // }
 
   return (
     <Wrapper onClick={onClick}>
