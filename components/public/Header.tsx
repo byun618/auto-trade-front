@@ -1,9 +1,10 @@
 import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
-import { RefObject } from 'react'
+import { RefObject, useState } from 'react'
 import Arrow from '../../assets/png/arrow.png'
 import Plus from '../../assets/png/plus.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
+import AddTicker from '../Home/AddTicker'
 import Button from './Button'
 import Image from './Image'
 
@@ -77,12 +78,14 @@ export default function Header({
   right,
   headerRef,
 }: HeaderProps) {
+  const [plusOpen, setPlusOpen] = useState(false)
+
   const onPressBack = () => {
     router.back()
   }
 
   const onPressPlus = () => {
-    alert('plus')
+    setPlusOpen(true)
   }
 
   const renderButtons = (type: HeaderButtonTypes) => {
@@ -103,7 +106,6 @@ export default function Header({
           <HeaderButton onClick={onPressPlus}>
             <Image
               src={Plus}
-              // src={'https://static.upbit.com/logos/BTC.png'}
               alt="plus"
               width={BUTTON_IMAGE_SIZE}
               height={BUTTON_IMAGE_SIZE}
@@ -114,10 +116,18 @@ export default function Header({
   }
 
   return (
-    <Wrapper ref={headerRef}>
-      <Left>{left && renderButtons(left)}</Left>
-      <Center>{title}</Center>
-      <Right>{right && renderButtons(right)}</Right>
-    </Wrapper>
+    <>
+      <Wrapper ref={headerRef}>
+        <Left>{left && renderButtons(left)}</Left>
+        <Center>{title}</Center>
+        <Right>{right && renderButtons(right)}</Right>
+      </Wrapper>
+      <AddTicker
+        isOpen={plusOpen}
+        onClose={() => {
+          setPlusOpen(false)
+        }}
+      />
+    </>
   )
 }
