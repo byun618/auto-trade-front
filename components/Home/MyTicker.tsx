@@ -4,10 +4,10 @@ import { useSocket } from '../../contexts/socket'
 import Button from '../public/Button'
 import Image from '../public/Image'
 
-const TICKER_IMAGE_SIZE = 33
+const TICKER_IMAGE_SIZE = 50
 
 interface MyTickerProps {
-  ticker: string
+  name: string
   start: number
   elapse: number
   targetPrice?: number | boolean
@@ -23,95 +23,83 @@ type TargetPriceProps = Partial<MyTickerProps> & {
 }
 
 const Wrapper = styled(Button)`
-  display: flex;
-  background: #ffffff;
-  border-radius: 20px;
-  padding: 15px 12px;
-  min-width: 200px; // TODO: 폰트 적용하면서 해결 해야함
-`
-
-const Content = styled.div`
-  display: flex;
   text-align: left;
 `
 
-const TickerIcon = styled.div`
-  width: ${TICKER_IMAGE_SIZE}px;
-  height: ${TICKER_IMAGE_SIZE}px;
-`
-
-const Left = styled(Content)`
+const InfoWrapper = styled.div`
+  display: flex;
   flex-direction: column;
-  justify-content: center;
-  margin-right: 14px;
+  margin-left: 7px;
+  margin-right: 20px;
 `
 
-const TickerName = styled.div`
+const Name = styled.div`
+  font-style: normal;
   font-weight: 600;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 20px;
+  line-height: 24px;
   color: #333333;
-
-  padding-top: 9px;
 `
 
 const TimeSet = styled.div`
+  font-style: normal;
   font-weight: 500;
-  font-size: 8px;
-  line-height: 10px;
+  font-size: 16px;
+  line-height: 19px;
   color: #808080;
-
-  padding-top: 2px;
 `
 
-const Right = styled(Content)`
+const StatusWrapper = styled.div`
+  display: flex;
   flex-direction: column;
-  justify-content: center;
 `
 
 const TargetDate = styled.div`
+  font-style: normal;
   font-weight: 600;
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 15px;
+  line-height: 18px;
   color: #333333;
 `
 
 const TargetPrice = styled.div<TargetPriceProps>`
   font-style: normal;
   font-weight: ${({ targetPrice }) => (targetPrice ? '600' : '400')};
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 15px;
+  line-height: 18px;
   color: ${({ targetPrice }) => (targetPrice ? '#333333' : '#808080')};
   margin: 5px 0;
 `
 
-const StatusWrapper = styled.div`
+const CurrentStatusWrapper = styled.div`
   display: flex;
+  flex-direction: row;
+  align-items: center;
 `
 
-const Status = styled.div<TargetPriceProps>`
+const CurrentStatus = styled.div<TargetPriceProps>`
   font-style: normal;
   font-weight: 400;
   font-weight: ${({ statusColor }) =>
     statusColor === '#333333' ? '600' : '400'};
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 15px;
+  line-height: 18px;
   color: ${({ statusColor }) => statusColor};
 `
 
 const Ror = styled.div<TargetPriceProps>`
   font-style: normal;
   font-weight: 600;
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 15px;
+  line-height: 18px;
   color: #b61931;
   color: ${({ isPositive }) => (isPositive ? '#b61931' : '#2c54c1')};
 
-  margin-left: 4px;
+  margin-left: 8px;
 `
 
 export default function MyTicker({
-  ticker,
+  name,
   start,
   elapse,
   targetPrice,
@@ -156,32 +144,30 @@ export default function MyTicker({
 
   return (
     <Wrapper onClick={onClick}>
-      <Left>
-        <TickerIcon>
-          <Image
-            src={`https://static.upbit.com/logos/${ticker.split('-')[1]}.png`}
-            alt={ticker.split('-')[1]}
-            width={TICKER_IMAGE_SIZE}
-            height={TICKER_IMAGE_SIZE}
-          />
-        </TickerIcon>
-        <TickerName>{ticker}</TickerName>
+      <Image
+        src={`https://static.upbit.com/logos/${name.split('-')[1]}.png`}
+        alt={name.split('-')[1]}
+        width={TICKER_IMAGE_SIZE}
+        height={TICKER_IMAGE_SIZE}
+      />
+      <InfoWrapper>
+        <Name>{name}</Name>
         <TimeSet>
-          {start}시 {elapse}시간
+          {start}시간 {elapse}시간
         </TimeSet>
-      </Left>
-      <Right>
+      </InfoWrapper>
+      <StatusWrapper>
         <TargetDate>2022-03-13 15시</TargetDate>
         <TargetPrice targetPrice={targetPrice}>
           {targetPrice ? `${targetPrice.toLocaleString()}원` : '목표 금액 미정'}
         </TargetPrice>
-        <StatusWrapper>
-          <Status statusColor={statusColor}>{status}</Status>
+        <CurrentStatusWrapper>
+          <CurrentStatus statusColor={statusColor}>{status}</CurrentStatus>
           {rorConvert && (
             <Ror isPositive={rorConvert > 0}>{`${rorConvert.toFixed(2)}%`}</Ror>
           )}
-        </StatusWrapper>
-      </Right>
+        </CurrentStatusWrapper>
+      </StatusWrapper>
     </Wrapper>
   )
 }
