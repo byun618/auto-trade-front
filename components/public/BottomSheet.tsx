@@ -1,5 +1,7 @@
+import styled from '@emotion/styled'
 import { ReactNode } from 'react'
 import Sheet from 'react-modal-sheet'
+import { MotionProps } from 'framer-motion'
 
 interface BottomSheetProps {
   children: ReactNode
@@ -7,6 +9,8 @@ interface BottomSheetProps {
   onClose: any
   sheetHeight: any
 }
+
+const Backdrop = styled(Sheet.Backdrop)``
 
 export default function BottomSheet({
   children,
@@ -22,10 +26,10 @@ export default function BottomSheet({
       snapPoints={[sheetHeight]}
       initialSnap={0}
     >
-      <Sheet.Backdrop onViewportBoxUpdate={true} onTapCancel={onClose} />
       <Sheet.Container onViewportBoxUpdate={true}>
         <Sheet.Content onViewportBoxUpdate={true}>{children}</Sheet.Content>
       </Sheet.Container>
+      <Backdrop onViewportBoxUpdate={true} onTap={onClose} />
     </Sheet>
   )
 }

@@ -52,9 +52,10 @@ const myTickers = [
   },
 ]
 
-export const Wrapper = styled.div`
+const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  padding-top: 40px;
 `
 
 const MyTickerList = styled.div`
@@ -62,7 +63,7 @@ const MyTickerList = styled.div`
   overflow: scroll;
   // TODO: 스크롤바 숨기기
 
-  padding: 40px 10px 0 10px;
+  padding: 0 10px;
 
   & > :not(:first-of-type) {
     margin-left: 10px;
