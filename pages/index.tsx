@@ -2,12 +2,12 @@ import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
-import Ticker from '../components/Home/Ticker'
-import TickerDetail from '../components/Home/TickerDetail'
+import MyTicker from '../components/Home/MyTicker'
+import MyTickerDetail from '../components/Home/MyTickerDetail'
 import Page from '../components/public/Page'
 import { useSocket } from '../contexts/socket'
 
-const tickers = [
+const myTickers = [
   {
     ticker: 'KRW-BTC',
     start: 5,
@@ -52,22 +52,12 @@ const tickers = [
   },
 ]
 
-export interface Ticker {
-  ticker: string
-  start: number
-  elapse: number
-  targetPrice: number
-  isHold: boolean
-  isSell: boolean
-  ror: number
-}
-
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `
 
-const TickerList = styled.div`
+const MyTickerList = styled.div`
   display: flex;
   overflow: scroll;
   // TODO: 스크롤바 숨기기
@@ -112,10 +102,10 @@ const Home: NextPage = () => {
   return (
     <Page router={router} headerTitle="홈" headerRight="plus" full>
       <Wrapper>
-        <TickerList>
-          {tickers.map((t, index) => (
+        <MyTickerList>
+          {myTickers.map((t, index) => (
             <div key={index}>
-              <Ticker
+              <MyTicker
                 ticker={t.ticker}
                 start={t.start}
                 elapse={t.elapse}
@@ -129,9 +119,9 @@ const Home: NextPage = () => {
               />
             </div>
           ))}
-        </TickerList>
+        </MyTickerList>
         {selectTicker ? (
-          <TickerDetail ticker={selectTicker} />
+          <MyTickerDetail ticker={selectTicker} />
         ) : (
           <NullWrapper>
             <NullText>티커를 선택해 주세요.</NullText>

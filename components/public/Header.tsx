@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
-import { RefObject, useState } from 'react'
+import { RefObject } from 'react'
 import Arrow from '../../assets/png/arrow.png'
 import Plus from '../../assets/png/plus.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
-import AddTicker from '../Home/AddTicker'
 import Button from './Button'
 import Image from './Image'
 
@@ -78,14 +77,12 @@ export default function Header({
   right,
   headerRef,
 }: HeaderProps) {
-  const [plusOpen, setPlusOpen] = useState(false)
-
   const onPressBack = () => {
     router.back()
   }
 
   const onPressPlus = () => {
-    setPlusOpen(true)
+    router.push('/add-ticker')
   }
 
   const renderButtons = (type: HeaderButtonTypes) => {
@@ -122,12 +119,6 @@ export default function Header({
         <Center>{title}</Center>
         <Right>{right && renderButtons(right)}</Right>
       </Wrapper>
-      <AddTicker
-        isOpen={plusOpen}
-        onClose={() => {
-          setPlusOpen(false)
-        }}
-      />
     </>
   )
 }

@@ -744,6 +744,7 @@ __metadata:
     prettier: ^2.5.1
     react: 17.0.2
     react-dom: 17.0.2
+    react-dropdown: ^1.9.2
     react-modal-sheet: ^1.5.1
     socket.io-client: ^4.0.1
     typescript: 4.6.2
@@ -868,6 +869,13 @@ __metadata:
     ansi-styles: ^4.1.0
     supports-color: ^7.1.0
   checksum: fe75c9d5c76a7a98d45495b91b2172fa3b7a09e0cc9370e5c8feb1c567b85c4288e2b3fded7cfdd7359ac28d6b3844feb8b82b8686842e93d23c827c417e83fc
+  languageName: node
+  linkType: hard
+
+"classnames@npm:^2.2.3":
+  version: 2.3.1
+  resolution: "classnames@npm:2.3.1"
+  checksum: 14db8889d56c267a591f08b0834989fe542d47fac659af5a539e110cc4266694e8de86e4e3bbd271157dbd831361310a8293e0167141e80b0f03a0f175c80960
   languageName: node
   linkType: hard
 
@@ -2478,6 +2486,18 @@ __metadata:
   peerDependencies:
     react: 17.0.2
   checksum: 1c1eaa3bca7c7228d24b70932e3d7c99e70d1d04e13bb0843bbf321582bc25d7961d6b8a6978a58a598af2af496d1cedcfb1bf65f6b0960a0a8161cb8dab743c
+  languageName: node
+  linkType: hard
+
+"react-dropdown@npm:^1.9.2":
+  version: 1.9.2
+  resolution: "react-dropdown@npm:1.9.2"
+  dependencies:
+    classnames: ^2.2.3
+  peerDependencies:
+    react: ^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0
+    react-dom: ^0.14.7 || ^15.0.0-0 || ^16.0.0 || ^17.0.0
+  checksum: ce9e96f64e80bb4270d57c0aec3d7fc002b84468d8e15c195453b32ab9e84e8016fc75c506fd990db02a5b008f3d52daf4d0dfd6dd039a9d4df992f71f915b2f
   languageName: node
   linkType: hard
 

@@ -51,6 +51,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.5.1"],\
             ["react", "npm:17.0.2"],\
             ["react-dom", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:17.0.2"],\
+            ["react-dropdown", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.9.2"],\
             ["react-modal-sheet", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.5.1"],\
             ["socket.io-client", "npm:4.4.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"]\
@@ -1038,6 +1039,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["prettier", "npm:2.5.1"],\
             ["react", "npm:17.0.2"],\
             ["react-dom", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:17.0.2"],\
+            ["react-dropdown", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.9.2"],\
             ["react-modal-sheet", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.5.1"],\
             ["socket.io-client", "npm:4.4.1"],\
             ["typescript", "patch:typescript@npm%3A4.6.2#~builtin<compat/typescript>::version=4.6.2&hash=bda367"]\
@@ -1192,6 +1194,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["chalk", "npm:4.1.2"],\
             ["ansi-styles", "npm:4.3.0"],\
             ["supports-color", "npm:7.2.0"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["classnames", [\
+        ["npm:2.3.1", {\
+          "packageLocation": "./.yarn/cache/classnames-npm-2.3.1-f2ae0a8d3c-14db8889d5.zip/node_modules/classnames/",\
+          "packageDependencies": [\
+            ["classnames", "npm:2.3.1"]\
           ],\
           "linkType": "HARD"\
         }]\
@@ -3189,6 +3200,33 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           ],\
           "packagePeers": [\
             "@types/react",\
+            "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["react-dropdown", [\
+        ["npm:1.9.2", {\
+          "packageLocation": "./.yarn/cache/react-dropdown-npm-1.9.2-ce15338064-ce9e96f64e.zip/node_modules/react-dropdown/",\
+          "packageDependencies": [\
+            ["react-dropdown", "npm:1.9.2"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.9.2", {\
+          "packageLocation": "./.yarn/__virtual__/react-dropdown-virtual-ba9f88917e/0/cache/react-dropdown-npm-1.9.2-ce15338064-ce9e96f64e.zip/node_modules/react-dropdown/",\
+          "packageDependencies": [\
+            ["react-dropdown", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:1.9.2"],\
+            ["@types/react", "npm:17.0.40"],\
+            ["@types/react-dom", null],\
+            ["classnames", "npm:2.3.1"],\
+            ["react", "npm:17.0.2"],\
+            ["react-dom", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:17.0.2"]\
+          ],\
+          "packagePeers": [\
+            "@types/react-dom",\
+            "@types/react",\
+            "react-dom",\
             "react"\
           ],\
           "linkType": "HARD"\

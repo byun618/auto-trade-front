@@ -5,7 +5,7 @@ interface BottomSheetProps {
   children: ReactNode
   isOpen: boolean
   onClose: any
-  sheetHeight: number
+  sheetHeight: any
 }
 
 export default function BottomSheet({

@@ -6,7 +6,7 @@ import Image from '../public/Image'
 
 const TICKER_IMAGE_SIZE = 33
 
-interface TickerProps {
+interface MyTickerProps {
   ticker: string
   start: number
   elapse: number
@@ -17,7 +17,7 @@ interface TickerProps {
   onClick: Function
 }
 
-type TargetPriceProps = Partial<TickerProps> & {
+type TargetPriceProps = Partial<MyTickerProps> & {
   statusColor?: string
   isPositive?: boolean
 }
@@ -110,7 +110,7 @@ const Ror = styled.div<TargetPriceProps>`
   margin-left: 4px;
 `
 
-export default function Ticker({
+export default function MyTicker({
   ticker,
   start,
   elapse,
@@ -119,7 +119,7 @@ export default function Ticker({
   isSell,
   ror,
   onClick,
-}: TickerProps) {
+}: MyTickerProps) {
   const { socket, connectSocket } = useSocket()
 
   const status = useMemo(() => {

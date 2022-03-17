@@ -1,13 +1,22 @@
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { useSocket } from '../../contexts/socket'
-import { Ticker } from '../../pages'
 import Image from '../public/Image'
 
 const TICKER_IMAGE_SIZE = 50
 
-interface TickerDetailProps {
-  ticker: Ticker | null
+interface MyTicker {
+  ticker: string
+  start: number
+  elapse: number
+  targetPrice: number
+  isHold: boolean
+  isSell: boolean
+  ror: number
+}
+
+interface MyTickerDetailProps {
+  ticker: MyTicker | null
 }
 
 const Wrapper = styled.div`
@@ -58,7 +67,7 @@ const TimeSet = styled.div`
   color: #808080;
 `
 
-export default function TickerDetail({ ticker }: TickerDetailProps) {
+export default function MyTickerDetail({ ticker }: MyTickerDetailProps) {
   const { socket } = useSocket()
 
   useEffect(() => {
