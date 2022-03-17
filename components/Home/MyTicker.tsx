@@ -11,10 +11,9 @@ interface MyTickerProps {
   start: number
   elapse: number
   targetPrice?: number | boolean
-  isHold: boolean
-  isSell: boolean
+  isHold?: boolean
+  isSell?: boolean
   ror?: number
-  onClick: Function
 }
 
 type TargetPriceProps = Partial<MyTickerProps> & {
@@ -106,7 +105,6 @@ export default function MyTicker({
   isHold,
   isSell,
   ror,
-  onClick,
 }: MyTickerProps) {
   const { socket, connectSocket } = useSocket()
 
@@ -143,7 +141,7 @@ export default function MyTicker({
   // }
 
   return (
-    <Wrapper onClick={onClick}>
+    <Wrapper onClick={() => {}}>
       <Image
         src={`https://static.upbit.com/logos/${name.split('-')[1]}.png`}
         alt={name.split('-')[1]}

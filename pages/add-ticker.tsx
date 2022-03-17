@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import axios from 'axios'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
@@ -67,6 +68,18 @@ const AddTicker: NextPage = () => {
     setElapse(e.target.value)
   }
 
+  const onSubmitTicker = async () => {
+    setIsModalOpen(false)
+
+    await axios.post('http://localhost:3001/user-tickers', {
+      name: select,
+      start: Number(start),
+      elapse: Number(elapse),
+    })
+
+    router.push('/')
+  }
+
   const router = useRouter()
   return (
     <Page router={router} headerLeft="back" headerTitle="티커 추가" full>
@@ -114,10 +127,7 @@ const AddTicker: NextPage = () => {
                 },
                 {
                   text: '확인',
-                  onClick: () => {
-                    setIsModalOpen(false)
-                    router.push('/')
-                  },
+                  onClick: onSubmitTicker,
                 },
               ]}
               ticker={{
