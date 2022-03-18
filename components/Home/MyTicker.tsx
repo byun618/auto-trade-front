@@ -3,12 +3,11 @@ import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useSocket } from '../../contexts/socket'
 import Button from '../public/Button'
-import Image from '../public/Image'
+import TickerIcon from '../public/TickerIcon'
 
 const TICKER_IMAGE_SIZE = 50
 
-export interface MyTickerProps {
-  idx?: number
+export interface MyTicker {
   name: string
   start: number
   elapse: number
@@ -18,13 +17,21 @@ export interface MyTickerProps {
   ror?: number
 }
 
-type TargetPriceProps = Partial<MyTickerProps> & {
+type StyleProps = Partial<MyTicker> & {
   statusColor?: string
   isPositive?: boolean
 }
 
 const Wrapper = styled(Button)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  padding: 17px 15px;
+  margin: 0 20px;
+  border-radius: 20px;
   text-align: left;
+  background-color: #ffffff;
 `
 
 const InfoWrapper = styled.div`
@@ -63,7 +70,7 @@ const TargetDate = styled.div`
   color: #333333;
 `
 
-const TargetPrice = styled.div<TargetPriceProps>`
+const TargetPrice = styled.div<StyleProps>`
   font-style: normal;
   font-weight: ${({ targetPrice }) => (targetPrice ? '600' : '400')};
   font-size: 15px;
@@ -78,7 +85,7 @@ const CurrentStatusWrapper = styled.div`
   align-items: center;
 `
 
-const CurrentStatus = styled.div<TargetPriceProps>`
+const CurrentStatus = styled.div<StyleProps>`
   font-style: normal;
   font-weight: 400;
   font-weight: ${({ statusColor }) =>
@@ -88,7 +95,7 @@ const CurrentStatus = styled.div<TargetPriceProps>`
   color: ${({ statusColor }) => statusColor};
 `
 
-const Ror = styled.div<TargetPriceProps>`
+const Ror = styled.div<StyleProps>`
   font-style: normal;
   font-weight: 600;
   font-size: 15px;
@@ -99,16 +106,8 @@ const Ror = styled.div<TargetPriceProps>`
   margin-left: 8px;
 `
 
-export default function MyTicker({
-  idx,
-  name,
-  start,
-  elapse,
-  targetPrice,
-  isHold,
-  isSell,
-  ror,
-}: MyTickerProps) {
+export default function MyTicker({ myTicker }: { myTicker: MyTicker }) {
+  const { name, start, elapse, targetPrice, isHold, isSell, ror } = myTicker
   const router = useRouter()
   const { socket, connectSocket } = useSocket()
 
@@ -145,17 +144,8 @@ export default function MyTicker({
   // }
 
   return (
-    <Wrapper
-      onClick={() => {
-        router.push(`/my-ticker-detail/${idx}`)
-      }}
-    >
-      <Image
-        src={`https://static.upbit.com/logos/${name.split('-')[1]}.png`}
-        alt={name.split('-')[1]}
-        width={TICKER_IMAGE_SIZE}
-        height={TICKER_IMAGE_SIZE}
-      />
+    <Wrapper onClick={() => {}}>
+      <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
       <InfoWrapper>
         <Name>{name}</Name>
         <TimeSet>

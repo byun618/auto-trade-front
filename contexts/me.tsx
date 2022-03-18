@@ -1,29 +1,19 @@
 import axios from 'axios'
 import { createContext, useContext, useEffect, useState } from 'react'
-
-interface MyTicker {
-  name: string
-  start: number
-  elapse: number
-  targetPrice?: number | boolean
-  isHold?: boolean
-  isSell?: boolean
-  ror?: number
-  onClick?: Function
-}
+import { MyTicker } from '../components/Home/MyTicker'
 
 const defaultValue: {
-  myTickers: MyTicker[] | null
+  myTickers: MyTicker[]
   fetchMyTickers: Function
 } = {
-  myTickers: null,
+  myTickers: [],
   fetchMyTickers: () => {},
 }
 
 const MeContext = createContext(defaultValue)
 
 const MeProvider: React.FC = ({ children }) => {
-  const [myTickers, setMyTickers] = useState<MyTicker[] | null>(null)
+  const [myTickers, setMyTickers] = useState<MyTicker[]>([])
 
   const fetchMyTickers = async () => {
     const { data } = await axios.get('http://localhost:3001/user-tickers')
