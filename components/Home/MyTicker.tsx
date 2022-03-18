@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { useMemo } from 'react'
 import { useSocket } from '../../contexts/socket'
 import Button from '../public/Button'
@@ -6,7 +7,8 @@ import Image from '../public/Image'
 
 const TICKER_IMAGE_SIZE = 50
 
-interface MyTickerProps {
+export interface MyTickerProps {
+  idx?: number
   name: string
   start: number
   elapse: number
@@ -98,6 +100,7 @@ const Ror = styled.div<TargetPriceProps>`
 `
 
 export default function MyTicker({
+  idx,
   name,
   start,
   elapse,
@@ -106,6 +109,7 @@ export default function MyTicker({
   isSell,
   ror,
 }: MyTickerProps) {
+  const router = useRouter()
   const { socket, connectSocket } = useSocket()
 
   const status = useMemo(() => {
@@ -141,7 +145,11 @@ export default function MyTicker({
   // }
 
   return (
-    <Wrapper onClick={() => {}}>
+    <Wrapper
+      onClick={() => {
+        router.push(`/my-ticker-detail/${idx}`)
+      }}
+    >
       <Image
         src={`https://static.upbit.com/logos/${name.split('-')[1]}.png`}
         alt={name.split('-')[1]}

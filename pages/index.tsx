@@ -53,6 +53,7 @@ const Home: NextPage = () => {
             {myTickers.map((ticker, index) => (
               <MyTickerWrapper key={index}>
                 <MyTicker
+                  idx={index}
                   name={ticker.name}
                   start={ticker.start}
                   elapse={ticker.elapse}
