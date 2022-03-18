@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useMemo } from 'react'
+import { CSSProperties, useMemo } from 'react'
 import { useSocket } from '../../contexts/socket'
 import Button from '../public/Button'
 import TickerIcon from '../public/TickerIcon'
@@ -8,13 +8,19 @@ import TickerIcon from '../public/TickerIcon'
 const TICKER_IMAGE_SIZE = 50
 
 export interface MyTicker {
+  _id: string
   name: string
   start: number
   elapse: number
+  targetDate?: string
   targetPrice?: number | boolean
   isHold?: boolean
   isSell?: boolean
   ror?: number
+}
+
+interface MyTickerProps {
+  myTicker: MyTicker
 }
 
 type StyleProps = Partial<MyTicker> & {
@@ -60,11 +66,13 @@ const StatusWrapper = styled.div`
   flex-direction: column;
 `
 
-const TargetDate = styled.div`
+const TargetDate = styled.div<StyleProps>`
   font-weight: 600;
+  font-weight: ${({ targetDate }) => (targetDate ? '600' : '400')};
   font-size: 15px;
   line-height: 18px;
   color: #333333;
+  color: ${({ targetDate }) => (targetDate ? '#333333' : '#808080')};
 `
 
 const TargetPrice = styled.div<StyleProps>`
@@ -100,8 +108,18 @@ const Ror = styled.div<StyleProps>`
   margin-left: 8px;
 `
 
-export default function MyTicker({ myTicker }: { myTicker: MyTicker }) {
-  const { name, start, elapse, targetPrice, isHold, isSell, ror } = myTicker
+export default function MyTicker({ myTicker }: MyTickerProps) {
+  const {
+    _id,
+    name,
+    start,
+    elapse,
+    targetDate,
+    targetPrice,
+    isHold,
+    isSell,
+    ror,
+  } = myTicker
   const router = useRouter()
   const { socket, connectSocket } = useSocket()
 
@@ -138,7 +156,11 @@ export default function MyTicker({ myTicker }: { myTicker: MyTicker }) {
   // }
 
   return (
-    <Wrapper onClick={() => {}}>
+    <Wrapper
+      onClick={() => {
+        router.push(`/my-ticker-detail/${_id}`)
+      }}
+    >
       <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
       <InfoWrapper>
         <Name>{name}</Name>
@@ -147,7 +169,9 @@ export default function MyTicker({ myTicker }: { myTicker: MyTicker }) {
         </TimeSet>
       </InfoWrapper>
       <StatusWrapper>
-        <TargetDate>2022-03-13 15시</TargetDate>
+        <TargetDate targetDate={targetDate}>
+          {targetDate ?? '목표 Date 미정'}
+        </TargetDate>
         <TargetPrice targetPrice={targetPrice}>
           {targetPrice ? `${targetPrice.toLocaleString()}원` : '목표 금액 미정'}
         </TargetPrice>

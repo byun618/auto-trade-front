@@ -17,11 +17,6 @@ const Title = styled.div`
 
 const Home: NextPage = () => {
   const router = useRouter()
-  const { myTickers, fetchMyTickers } = useMe()
-
-  useEffect(() => {
-    fetchMyTickers()
-  }, [])
 
   return (
     <Page router={router} headerTitle="홈" headerRight="plus" full>

@@ -22,7 +22,7 @@ export default function MyTickerList() {
   return (
     <Wrapper>
       {myTickers.map((myTicker, index) => (
-        <MyTicker key={index} myTicker={{ ...myTicker, ror: 1.01 }} />
+        <MyTicker key={index} myTicker={myTicker} />
       ))}
     </Wrapper>
   )
