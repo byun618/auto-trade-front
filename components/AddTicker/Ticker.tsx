@@ -11,7 +11,11 @@ interface TickerProps {
   disabled: boolean
 }
 
-const Wrapper = styled(Button)<{ select: boolean }>`
+type StyleProps = {
+  select: boolean
+}
+
+const Wrapper = styled(Button)<StyleProps>`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -28,12 +32,9 @@ const Wrapper = styled(Button)<{ select: boolean }>`
 `
 
 const Name = styled.div`
-  font-style: normal;
   font-weight: 600;
-  //   font-size: 12px;
   font-size: 10px;
   line-height: 14px;
-
   color: #333333;
 
   padding-top: 9px;

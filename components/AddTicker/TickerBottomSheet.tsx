@@ -25,7 +25,6 @@ const Wrapper = styled.div`
 `
 
 const Text = styled.div`
-  font-style: normal;
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;

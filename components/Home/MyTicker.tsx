@@ -42,7 +42,6 @@ const InfoWrapper = styled.div`
 `
 
 const Name = styled.div`
-  font-style: normal;
   font-weight: 600;
   font-size: 20px;
   line-height: 24px;
@@ -50,7 +49,6 @@ const Name = styled.div`
 `
 
 const TimeSet = styled.div`
-  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
@@ -63,7 +61,6 @@ const StatusWrapper = styled.div`
 `
 
 const TargetDate = styled.div`
-  font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 18px;
@@ -71,7 +68,6 @@ const TargetDate = styled.div`
 `
 
 const TargetPrice = styled.div<StyleProps>`
-  font-style: normal;
   font-weight: ${({ targetPrice }) => (targetPrice ? '600' : '400')};
   font-size: 15px;
   line-height: 18px;
@@ -86,7 +82,6 @@ const CurrentStatusWrapper = styled.div`
 `
 
 const CurrentStatus = styled.div<StyleProps>`
-  font-style: normal;
   font-weight: 400;
   font-weight: ${({ statusColor }) =>
     statusColor === '#333333' ? '600' : '400'};
@@ -96,7 +91,6 @@ const CurrentStatus = styled.div<StyleProps>`
 `
 
 const Ror = styled.div<StyleProps>`
-  font-style: normal;
   font-weight: 600;
   font-size: 15px;
   line-height: 18px;

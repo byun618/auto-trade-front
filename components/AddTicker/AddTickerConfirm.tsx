@@ -45,7 +45,6 @@ const Content = styled.div`
 `
 
 const Name = styled.div`
-  font-style: normal;
   font-weight: 600;
   font-size: 18px;
   line-height: 22px;
@@ -55,7 +54,6 @@ const Name = styled.div`
 `
 
 const Time = styled.div`
-  font-style: normal;
   font-weight: 500;
   font-size: 16px;
   line-height: 19px;
