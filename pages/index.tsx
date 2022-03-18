@@ -1,10 +1,8 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect } from 'react'
 import MyTickerList from '../components/Home/MyTickerList'
 import Page from '../components/public/Page'
-import { useMe } from '../contexts/me'
 
 const Title = styled.div`
   font-weight: 700;
