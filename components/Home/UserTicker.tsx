@@ -1,29 +1,30 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { CSSProperties, useMemo } from 'react'
-import { useSocket } from '../../contexts/socket'
+import { useMemo } from 'react'
 import Button from '../public/Button'
 import TickerIcon from '../public/TickerIcon'
 
 const TICKER_IMAGE_SIZE = 50
 
-export interface MyTicker {
+export interface UserTicker {
   _id: string
   name: string
   start: number
   elapse: number
   targetDate?: string
   targetPrice?: number | boolean
+  isStart?: boolean
   isHold?: boolean
   isSell?: boolean
   ror?: number
 }
 
-interface MyTickerProps {
-  myTicker: MyTicker
+interface UserTickerProps {
+  userTicker: UserTicker
+  disabled?: boolean
 }
 
-type StyleProps = Partial<MyTicker> & {
+type StyleProps = Partial<UserTicker> & {
   statusColor?: string
   isPositive?: boolean
 }
@@ -108,7 +109,10 @@ const Ror = styled.div<StyleProps>`
   margin-left: 8px;
 `
 
-export default function MyTicker({ myTicker }: MyTickerProps) {
+export default function UserTicker({
+  userTicker,
+  disabled = false,
+}: UserTickerProps) {
   const {
     _id,
     name,
@@ -116,16 +120,16 @@ export default function MyTicker({ myTicker }: MyTickerProps) {
     elapse,
     targetDate,
     targetPrice,
+    isStart,
     isHold,
     isSell,
     ror,
-  } = myTicker
+  } = userTicker
   const router = useRouter()
-  const { socket, connectSocket } = useSocket()
 
   const status = useMemo(() => {
-    if (!targetPrice) return '대기중'
-    else if (!isHold && !isSell) return '매수 대기 중'
+    if (!isStart) return '대기중'
+    else if (targetPrice && !isHold && !isSell) return '매수 대기 중'
     else if (isHold) return '매도 대기 중'
     else if (!isHold && isSell) return '매도 완료'
   }, [targetPrice, isHold, isSell])
@@ -149,17 +153,12 @@ export default function MyTicker({ myTicker }: MyTickerProps) {
     }
   }, [ror])
 
-  // const onClick = () => {
-  //   if (!socket) return
-
-  //   socket.emit('info', { ticker, start, elapse })
-  // }
-
   return (
     <Wrapper
       onClick={() => {
-        router.push(`/my-ticker-detail/${_id}`)
+        router.push(`/user-ticker/${_id}`)
       }}
+      disabled={disabled}
     >
       <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
       <InfoWrapper>

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import MyTickerList from '../components/Home/MyTickerList'
+import UserTickerList from '../components/Home/UserTickerList'
 import Page from '../components/public/Page'
 
 const Title = styled.div`
@@ -19,7 +19,7 @@ const Home: NextPage = () => {
   return (
     <Page router={router} headerTitle="홈" headerRight="plus" full>
       <Title>내 티커</Title>
-      <MyTickerList />
+      <UserTickerList />
     </Page>
   )
 }

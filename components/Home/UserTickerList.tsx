@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useEffect } from 'react'
 import { useMe } from '../../contexts/me'
-import MyTicker from './MyTicker'
+import MyTicker from './UserTicker'
 
 const Wrapper = styled.div`
   display: flex;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   }
 `
 
-export default function MyTickerList() {
+export default function UserTickerList() {
   const { myTickers, fetchMyTickers } = useMe()
 
   useEffect(() => {
@@ -22,7 +22,7 @@ export default function MyTickerList() {
   return (
     <Wrapper>
       {myTickers.map((myTicker, index) => (
-        <MyTicker key={index} myTicker={myTicker} />
+        <MyTicker key={index} userTicker={myTicker} />
       ))}
     </Wrapper>
   )
