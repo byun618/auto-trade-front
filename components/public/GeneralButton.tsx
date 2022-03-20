@@ -11,9 +11,13 @@ interface ButtonProps {
   className?: string
 }
 
-const Wrapper = styled(Button)`
+const Wrapper = styled(Button)<ButtonProps>`
   border-width: 0;
-  background-color: #366e88;
+  ${({ disabled }) =>
+    disabled
+      ? 'background: rgba(54, 110, 136, 0.3);'
+      : 'background-color: #366e88;'}
+
   color: #fff;
   border-radius: 20px;
   padding: 16px 18px;
