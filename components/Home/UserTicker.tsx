@@ -178,8 +178,8 @@ export default function UserTicker({
       }}
       disabled={disabled}
     >
-      <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
       <InfoWrapper>
+        <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
         <Name>{name}</Name>
         <TimeSet>
           {start}시간 {elapse}시간

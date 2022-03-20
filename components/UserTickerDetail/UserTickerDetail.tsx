@@ -13,15 +13,37 @@ const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   padding: 20px;
+`
 
-  & > :first-child {
-    margin-right: 9px;
-  }
+const LogWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  background: rgba(54, 110, 136, 0.3);
+  border-radius: 20px;
+  margin: 0 20px;
+  margin-bottom: 20px;
+  padding: 10px;
 `
 
 export default function UserTickerDetail({ id }: UserTickerDetailProps) {
   const { socket, connectSocket } = useSocket()
   const [userTicker, setUserTicker] = useState<IUserTicker | null>(null)
+  const [logs, setLogs] = useState<string[]>([])
+
+  const onClickStart = () => {
+    socket?.emit('start')
+  }
+
+  const handleInitRes = async ({ message }: any) => {
+    await fetchUserTicker()
+
+    setLogs((old) => [...old, message])
+  }
+
+  const handleStartRes = async ({ message }: any) => {
+    await fetchUserTicker()
+    setLogs((old) => [...old, message])
+  }
 
   useEffect(() => {
     connectSocket(id)
@@ -35,9 +57,8 @@ export default function UserTickerDetail({ id }: UserTickerDetailProps) {
     if (socket) {
       socket.emit('init', { userTickerId: id })
 
-      socket.on('init-res', async () => {
-        await fetchUserTicker()
-      })
+      socket.on('init-res', handleInitRes)
+      socket.on('start-res', handleStartRes)
 
       return () => {
         socket.disconnect()
@@ -46,19 +67,31 @@ export default function UserTickerDetail({ id }: UserTickerDetailProps) {
   }, [socket])
 
   const fetchUserTicker = async () => {
+    setUserTicker(null)
     const { data } = await axios.get(`http://localhost:3001/user-tickers/${id}`)
+    console.log(data.isStart)
 
     setUserTicker(data)
   }
 
   return (
     userTicker && (
-      <>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <UserTicker userTicker={userTicker} disabled={true} />
+
         <ButtonContainer>
-          <GeneralButton onClick={() => {}}>시작</GeneralButton>
+          <GeneralButton onClick={onClickStart} disabled={userTicker.isStart}>
+            시작
+          </GeneralButton>
         </ButtonContainer>
-      </>
+        <LogWrapper>
+          {logs.map((log, index) => (
+            <>
+              <div key={index}>{log}</div>
+            </>
+          ))}
+        </LogWrapper>
+      </div>
     )
   )
 }
