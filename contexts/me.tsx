@@ -1,28 +1,28 @@
 import axios from 'axios'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import { UserTicker } from '../components/Home/UserTicker'
 
 const defaultValue: {
-  myTickers: UserTicker[]
-  fetchMyTickers: Function
+  userTickers: UserTicker[]
+  fetchUserTickers: Function
 } = {
-  myTickers: [],
-  fetchMyTickers: () => {},
+  userTickers: [],
+  fetchUserTickers: () => {},
 }
 
 const MeContext = createContext(defaultValue)
 
 const MeProvider: React.FC = ({ children }) => {
-  const [myTickers, setMyTickers] = useState<UserTicker[]>([])
+  const [userTickers, setUserTickers] = useState<UserTicker[]>([])
 
-  const fetchMyTickers = async () => {
+  const fetchUserTickers = async () => {
     const { data } = await axios.get('http://localhost:3001/user-tickers')
 
-    setMyTickers(data)
+    setUserTickers(data)
   }
 
   return (
-    <MeContext.Provider value={{ myTickers, fetchMyTickers }}>
+    <MeContext.Provider value={{ userTickers, fetchUserTickers }}>
       {children}
     </MeContext.Provider>
   )

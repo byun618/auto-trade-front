@@ -11,7 +11,8 @@ export interface UserTicker {
   name: string
   start: number
   elapse: number
-  targetDate?: string
+  buyTime: string
+  sellTime: string
   targetPrice?: number | boolean
   isStart?: boolean
   isHold?: boolean
@@ -65,15 +66,31 @@ const TimeSet = styled.div`
 const StatusWrapper = styled.div`
   display: flex;
   flex-direction: column;
+
+  & > :not(:last-child) {
+    margin-bottom: 1px;
+  }
 `
 
 const TargetDate = styled.div<StyleProps>`
   font-weight: 600;
-  font-weight: ${({ targetDate }) => (targetDate ? '600' : '400')};
+  font-weight: ${({ buyTime, sellTime }) =>
+    buyTime && sellTime ? '600' : '400'};
   font-size: 15px;
   line-height: 18px;
   color: #333333;
-  color: ${({ targetDate }) => (targetDate ? '#333333' : '#808080')};
+  color: ${({ buyTime, sellTime }) =>
+    buyTime && sellTime ? '#333333' : '#808080'};
+`
+
+const BuyTime = styled(TargetDate)`
+  color: ${({ buyTime, sellTime }) =>
+    buyTime && sellTime ? '#b61931' : '#808080'};
+`
+
+const SellTime = styled(TargetDate)`
+  color: ${({ buyTime, sellTime }) =>
+    buyTime && sellTime ? '#2c54c1' : '#808080'};
 `
 
 const TargetPrice = styled.div<StyleProps>`
@@ -81,7 +98,7 @@ const TargetPrice = styled.div<StyleProps>`
   font-size: 15px;
   line-height: 18px;
   color: ${({ targetPrice }) => (targetPrice ? '#333333' : '#808080')};
-  margin: 5px 0;
+  // margin: 5px 0;
 `
 
 const CurrentStatusWrapper = styled.div`
@@ -113,19 +130,20 @@ export default function UserTicker({
   userTicker,
   disabled = false,
 }: UserTickerProps) {
+  const router = useRouter()
   const {
     _id,
     name,
     start,
     elapse,
-    targetDate,
+    buyTime,
+    sellTime,
     targetPrice,
     isStart,
     isHold,
     isSell,
     ror,
   } = userTicker
-  const router = useRouter()
 
   const status = useMemo(() => {
     if (!isStart) return '대기중'
@@ -168,9 +186,12 @@ export default function UserTicker({
         </TimeSet>
       </InfoWrapper>
       <StatusWrapper>
-        <TargetDate targetDate={targetDate}>
-          {targetDate ?? '목표 Date 미정'}
-        </TargetDate>
+        <BuyTime buyTime={buyTime} sellTime={sellTime}>
+          {buyTime ?? '목표 매수 일시 미정'}
+        </BuyTime>
+        <SellTime sellTime={sellTime} buyTime={buyTime}>
+          {sellTime ?? '목표 매도 일시 미정'}
+        </SellTime>
         <TargetPrice targetPrice={targetPrice}>
           {targetPrice ? `${targetPrice.toLocaleString()}원` : '목표 금액 미정'}
         </TargetPrice>
