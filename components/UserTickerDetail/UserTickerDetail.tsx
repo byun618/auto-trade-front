@@ -83,53 +83,40 @@ export default function UserTickerDetail({
     socket?.emit('current-price')
   }
 
-  const handleInitRes = async (rsp: any) => {
-    const { message } = rsp
-
+  const log = (message: string) => {
     setLogs((old) => [...old, message])
+  }
+
+  const handleMessage = async (rsp: any) => {
+    const { message } = rsp
 
     if (message === '이미 프로그램이 동작중입니다.') {
       enableStop()
-      return
     }
 
     if (message === '이미 프로그램이 초기화되었습니다.') {
       enableStart()
-      return
     }
+
+    if (message === '다음날 시도 해주세요.') {
+      enableInit()
+    }
+
+    log(message)
   }
 
-  const handleStartRes = async (rsp: any) => {
+  const handleMutate = async (rsp: any) => {
+    const { message, data } = rsp
+
+    await updateUserTickers(userTicker._id, data)
+    log(message)
+  }
+
+  const handleError = async (rsp: any) => {
     const { message } = rsp
-    setLogs((old) => [...old, message])
-  }
+    log(message)
 
-  const handleStoptRes = async (rsp: any) => {
-    const { message } = rsp
-    setLogs((old) => [...old, message])
-  }
-
-  const handleSetTargetTime = async (rsp: any) => {
-    const { userTickerId, message, data } = rsp
-    await updateUserTickers(userTickerId, data)
-    setLogs((old) => [...old, message])
-  }
-
-  const handleSetTargetPrice = async (rsp: any) => {
-    const { userTickerId, message, data } = rsp
-    await updateUserTickers(userTickerId, data)
-    setLogs((old) => [...old, message])
-  }
-
-  const handleCurrentPrice = (rsp: any) => {
-    const { currentPrice } = rsp
-    setLogs((old) => [...old, `현재가: ${currentPrice}`])
-  }
-
-  const handleBuyMarketOrder = async (rsp: any) => {
-    const { userTickerId, message, data } = rsp
-    await updateUserTickers(userTickerId, data)
-    setLogs((old) => [...old, message])
+    await onClickStop()
   }
 
   useEffect(() => {
@@ -140,13 +127,9 @@ export default function UserTickerDetail({
     if (socket) {
       onClickInit()
 
-      socket.on('init-res', handleInitRes)
-      socket.on('start-res', handleStartRes)
-      socket.on('stop-res', handleStoptRes)
-      socket.on('set-target-time', handleSetTargetTime)
-      socket.on('set-target-price', handleSetTargetPrice)
-      socket.on('current-price-res', handleCurrentPrice)
-      socket.on('buy-market-order', handleBuyMarketOrder)
+      socket.on('message', handleMessage)
+      socket.on('mutate', handleMutate)
+      socket.on('error', handleError)
 
       return () => {
         socket.disconnect()
@@ -157,7 +140,6 @@ export default function UserTickerDetail({
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <UserTicker userTicker={userTicker} disabled={true} />
-
       <ButtonContainer>
         <GeneralButton onClick={onClickInit} disabled={initDisabled}>
           초기화
