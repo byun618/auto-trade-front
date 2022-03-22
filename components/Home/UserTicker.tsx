@@ -14,7 +14,6 @@ export interface UserTicker {
   buyTime: string
   sellTime: string
   targetPrice?: number | boolean
-  isStart?: boolean
   isHold?: boolean
   isSell?: boolean
   ror?: number
@@ -139,17 +138,16 @@ export default function UserTicker({
     buyTime,
     sellTime,
     targetPrice,
-    isStart,
     isHold,
     isSell,
     ror,
   } = userTicker
 
   const status = useMemo(() => {
-    if (!isStart) return '대기중'
-    else if (targetPrice && !isHold && !isSell) return '매수 대기 중'
+    if (targetPrice && !isHold && !isSell) return '매수 대기 중'
     else if (isHold) return '매도 대기 중'
     else if (!isHold && isSell) return '매도 완료'
+    else return '대기중'
   }, [targetPrice, isHold, isSell])
 
   const statusColor = useMemo(() => {
@@ -182,7 +180,7 @@ export default function UserTicker({
         <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
         <Name>{name}</Name>
         <TimeSet>
-          {start}시간 {elapse}시간
+          {start}시 {elapse}시간
         </TimeSet>
       </InfoWrapper>
       <StatusWrapper>
