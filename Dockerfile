@@ -6,7 +6,7 @@ WORKDIR /auto-trade-front
 ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-ENV NEXT_PUBLIC_API_URL=http://localhost:3001
+ARG NEXT_PUBLIC_API_URL=https://s6napi.duckdns.org
 
 COPY . .
 
