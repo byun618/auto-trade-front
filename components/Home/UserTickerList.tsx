@@ -6,6 +6,7 @@ import UserTicker from './UserTicker'
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
+  margin: 0 20px;
 
   & > :not(:last-child) {
     margin-bottom: 20px;
@@ -22,9 +23,7 @@ export default function UserTickerList() {
   return (
     <Wrapper>
       {userTickers.map((userTicker, index) => (
-        <>
-          <UserTicker key={index} userTicker={userTicker} />
-        </>
+        <UserTicker key={index} userTicker={userTicker} />
       ))}
     </Wrapper>
   )

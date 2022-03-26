@@ -9,10 +9,16 @@ interface UserTickerDetailProps {
   userTicker: IUserTicker
 }
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0 20px;
+`
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
-  padding: 20px;
+  margin: 20px 0;
 
   & > :not(:last-child) {
     margin-right: 3px;
@@ -24,7 +30,6 @@ const LogWrapper = styled.div`
   flex-direction: column;
   background: rgba(54, 110, 136, 0.3);
   border-radius: 20px;
-  margin: 0 20px;
   margin-bottom: 20px;
   padding: 10px;
 `
@@ -138,7 +143,7 @@ export default function UserTickerDetail({
   }, [socket])
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <Wrapper>
       <UserTicker userTicker={userTicker} disabled={true} />
       <ButtonContainer>
         <GeneralButton onClick={onClickInit} disabled={initDisabled}>
@@ -161,6 +166,6 @@ export default function UserTickerDetail({
           </>
         ))}
       </LogWrapper>
-    </div>
+    </Wrapper>
   )
 }

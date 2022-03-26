@@ -29,23 +29,24 @@ type StyleProps = Partial<UserTicker> & {
   isPositive?: boolean
 }
 
-const Wrapper = styled(Button)`
+const ButtonWrapper = styled(Button)`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  padding: 17px 15px;
-  margin: 0 20px;
-  border-radius: 20px;
-  text-align: left;
   background-color: #ffffff;
+  border-radius: 20px;
+`
+
+const Wrapper = styled.div`
+  display: flex;
+  padding: 12px 30px;
+  width: 100%;
 `
 
 const InfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 7px;
-  margin-right: 20px;
+  align-items: start;
+  justify-content: center;
+  flex-grow: 1;
 `
 
 const Name = styled.div`
@@ -65,6 +66,8 @@ const TimeSet = styled.div`
 const StatusWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: right;
 
   & > :not(:last-child) {
     margin-bottom: 1px;
@@ -97,13 +100,13 @@ const TargetPrice = styled.div<StyleProps>`
   font-size: 15px;
   line-height: 18px;
   color: ${({ targetPrice }) => (targetPrice ? '#333333' : '#808080')};
-  // margin: 5px 0;
 `
 
 const CurrentStatusWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: flex-end;
 `
 
 const CurrentStatus = styled.div<StyleProps>`
@@ -170,36 +173,42 @@ export default function UserTicker({
   }, [ror])
 
   return (
-    <Wrapper
+    <ButtonWrapper
       onClick={() => {
         router.push(`/user-ticker/${_id}`)
       }}
       disabled={disabled}
     >
-      <InfoWrapper>
-        <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
-        <Name>{name}</Name>
-        <TimeSet>
-          {start}시 {elapse}시간
-        </TimeSet>
-      </InfoWrapper>
-      <StatusWrapper>
-        <BuyTime buyTime={buyTime} sellTime={sellTime}>
-          {buyTime ?? '목표 매수 일시 미정'}
-        </BuyTime>
-        <SellTime sellTime={sellTime} buyTime={buyTime}>
-          {sellTime ?? '목표 매도 일시 미정'}
-        </SellTime>
-        <TargetPrice targetPrice={targetPrice}>
-          {targetPrice ? `${targetPrice.toLocaleString()}원` : '목표 금액 미정'}
-        </TargetPrice>
-        <CurrentStatusWrapper>
-          <CurrentStatus statusColor={statusColor}>{status}</CurrentStatus>
-          {rorConvert && (
-            <Ror isPositive={rorConvert > 0}>{`${rorConvert.toFixed(2)}%`}</Ror>
-          )}
-        </CurrentStatusWrapper>
-      </StatusWrapper>
-    </Wrapper>
+      <Wrapper>
+        <InfoWrapper>
+          <TickerIcon name={name} size={TICKER_IMAGE_SIZE} />
+          <Name>{name}</Name>
+          <TimeSet>
+            {start}시 {elapse}시간
+          </TimeSet>
+        </InfoWrapper>
+        <StatusWrapper>
+          <BuyTime buyTime={buyTime} sellTime={sellTime}>
+            {buyTime ?? '목표 매수 일시 미정'}
+          </BuyTime>
+          <SellTime sellTime={sellTime} buyTime={buyTime}>
+            {sellTime ?? '목표 매도 일시 미정'}
+          </SellTime>
+          <TargetPrice targetPrice={targetPrice}>
+            {targetPrice
+              ? `${targetPrice.toLocaleString()}원`
+              : '목표 금액 미정'}
+          </TargetPrice>
+          <CurrentStatusWrapper>
+            <CurrentStatus statusColor={statusColor}>{status}</CurrentStatus>
+            {rorConvert && (
+              <Ror isPositive={rorConvert > 0}>{`${rorConvert.toFixed(
+                2,
+              )}%`}</Ror>
+            )}
+          </CurrentStatusWrapper>
+        </StatusWrapper>
+      </Wrapper>
+    </ButtonWrapper>
   )
 }
