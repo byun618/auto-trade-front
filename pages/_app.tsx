@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <MeProvider>
           <SocketProvider>
             <Head>
-              <title>🤖희잉🤖</title>
+              <title>🤖Auto Trade🤖</title>
             </Head>
             <Component {...pageProps} />
           </SocketProvider>
