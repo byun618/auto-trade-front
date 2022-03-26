@@ -18,7 +18,9 @@ const MeProvider: React.FC = ({ children }) => {
   const [userTickers, setUserTickers] = useState<UserTicker[]>([])
 
   const fetchUserTickers = async () => {
-    const { data } = await axios.get('http://localhost:3001/user-tickers')
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/user-tickers`,
+    )
 
     setUserTickers(data)
   }
@@ -34,7 +36,10 @@ const MeProvider: React.FC = ({ children }) => {
       ...userTickers.slice(idx + 1),
     ])
 
-    await axios.post(`http://localhost:3001/user-tickers/${id}`, updateObj)
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_API_URL}/user-tickers/${id}`,
+      updateObj,
+    )
   }
 
   return (

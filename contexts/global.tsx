@@ -13,7 +13,9 @@ const GlobalProvider: React.FC = ({ children }) => {
   const [tickers, setTickers] = useState<string[] | null>(null)
 
   const fetchTickers = async () => {
-    const { data } = await axios.get('http://localhost:3001/tickers')
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/tickers`,
+    )
 
     setTickers(data)
   }

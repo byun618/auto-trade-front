@@ -70,7 +70,7 @@ const AddTicker: NextPage = () => {
   const onSubmitTicker = async () => {
     setIsModalOpen(false)
 
-    await axios.post('http://localhost:3001/user-tickers', {
+    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user-tickers`, {
       name: select,
       start: Number(start),
       elapse: Number(elapse),
