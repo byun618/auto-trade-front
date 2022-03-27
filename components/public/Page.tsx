@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
-import { ReactNode, useRef } from 'react'
+import { ReactNode, useMemo, useRef } from 'react'
 import { DEFAULT_MARGIN } from '../../lib/constants'
 import Header, { HeaderButtonTypes } from '../public/Header'
 
@@ -45,6 +45,13 @@ export default function Page({
   backgroundColor = '#f1f1f1',
 }: PageProps) {
   const headerRef = useRef<HTMLInputElement>(null)
+  const headerHeight = useMemo(() => {
+    if (noHeader) {
+      return 0
+    } else {
+      return headerRef.current?.clientHeight ?? 44
+    }
+  }, [])
 
   return (
     <Wrapper>
@@ -58,7 +65,7 @@ export default function Page({
         />
       )}
       <Content
-        headerHeight={headerRef.current?.clientHeight ?? 44}
+        headerHeight={headerHeight}
         full={full}
         backgroundColor={backgroundColor}
       >
