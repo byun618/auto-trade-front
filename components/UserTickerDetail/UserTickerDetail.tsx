@@ -38,7 +38,7 @@ export default function UserTickerDetail({
   userTicker,
 }: UserTickerDetailProps) {
   const { socket, connectSocket } = useSocket()
-  const { updateUserTickers } = useMe()
+  const { fetchUserTickers, updateUserTickers } = useMe()
   const [logs, setLogs] = useState<string[]>([])
   const [initDisabled, setInitDisabled] = useState<boolean>(false)
   const [startDisabled, setStartDisabled] = useState<boolean>(false)
@@ -74,13 +74,6 @@ export default function UserTickerDetail({
 
   const onClickStop = async () => {
     socket?.emit('stop')
-    await updateUserTickers(userTicker._id, {
-      buyTime: null,
-      sellTime: null,
-      targetPrice: null,
-      isHold: null,
-      isSell: null,
-    })
     enableInit()
   }
 
@@ -107,13 +100,8 @@ export default function UserTickerDetail({
       enableInit()
     }
 
-    log(message)
-  }
+    await fetchUserTickers()
 
-  const handleMutate = async (rsp: any) => {
-    const { message, data } = rsp
-
-    await updateUserTickers(userTicker._id, data)
     log(message)
   }
 
@@ -133,7 +121,6 @@ export default function UserTickerDetail({
       onClickInit()
 
       socket.on('message', handleMessage)
-      socket.on('mutate', handleMutate)
       socket.on('error', handleError)
 
       return () => {
