@@ -1,6 +1,8 @@
 import axios from 'axios'
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useEffect, useState } from 'react'
 import { UserTicker } from '../components/Home/UserTicker'
+import api from '../lib/api'
+import { useGlobal } from './global'
 
 const defaultValue: {
   userTickers: UserTicker[]
@@ -15,7 +17,18 @@ const defaultValue: {
 const MeContext = createContext(defaultValue)
 
 const MeProvider: React.FC = ({ children }) => {
+  const { token } = useGlobal()
   const [userTickers, setUserTickers] = useState<UserTicker[]>([])
+
+  useEffect(() => {
+    if (token) {
+      const fetchUser = async () => {
+        await api.get('/users')
+      }
+
+      fetchUser()
+    }
+  }, [token])
 
   const fetchUserTickers = async () => {
     const { data } = await axios.get(

@@ -1,13 +1,14 @@
 import type { NextPage } from 'next'
 import styled from '@emotion/styled'
+import { ChangeEventHandler } from 'react'
 
 interface LoginInputProps {
   style?: object
   type: string
   name: string
-  value: any
+  value: string
   placeholder?: string
-  onChange: any
+  onChange: ChangeEventHandler<HTMLInputElement>
 }
 
 const Wrapper = styled.input`

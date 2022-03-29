@@ -9,7 +9,7 @@ import Image from './Image'
 
 const BUTTON_IMAGE_SIZE = 19
 
-export type HeaderButtonTypes = 'back' | 'plus'
+export type HeaderButtonTypes = 'back' | 'plus' | string | null
 
 interface HeaderProps {
   router: NextRouter

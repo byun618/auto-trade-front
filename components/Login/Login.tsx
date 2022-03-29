@@ -1,7 +1,9 @@
 import styled from '@emotion/styled'
+import axios from 'axios'
 import type { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 import Logo from '../../assets/png/logo-120x120.png'
+import { useGlobal } from '../../contexts/global'
 import GeneralButton from '../public/GeneralButton'
 import Image from '../public/Image'
 import LoginInput from './LoginInput'
@@ -33,8 +35,9 @@ const ButtonWrapper = styled.div`
 `
 
 const Login: NextPage = () => {
-  const [email, setEmail] = useState<string | null>(null)
-  const [password, setPassword] = useState<string | null>(null)
+  const [email, setEmail] = useState<string>('')
+  const [password, setPassword] = useState<string>('')
+  const { updateToken } = useGlobal()
 
   const onChangeEmail = (event: ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value)
@@ -44,8 +47,15 @@ const Login: NextPage = () => {
     setPassword(event.target.value)
   }
 
-  const onClickLogin = () => {
-    alert(`${password} ${email}`)
+  const onClickLogin = async () => {
+    const {
+      data: { token },
+    } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
+      email,
+      password,
+    })
+
+    updateToken(token)
   }
 
   return (
