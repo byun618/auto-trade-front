@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
-import axios from 'axios'
 import type { NextPage } from 'next'
 import { ChangeEvent, useState } from 'react'
 import Logo from '../../assets/png/logo-120x120.png'
 import { useGlobal } from '../../contexts/global'
+import api from '../../lib/api'
 import GeneralButton from '../public/GeneralButton'
 import Image from '../public/Image'
 import LoginInput from './LoginInput'
@@ -50,7 +50,7 @@ const Login: NextPage = () => {
   const onClickLogin = async () => {
     const {
       data: { token },
-    } = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`, {
+    } = await api.post('/users/login', {
       email,
       password,
     })

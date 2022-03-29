@@ -1,64 +1,44 @@
-import axios from 'axios'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { UserTicker } from '../components/Home/UserTicker'
 import api from '../lib/api'
 import { useGlobal } from './global'
 
 const defaultValue: {
+  user: any
   userTickers: UserTicker[]
   fetchUserTickers: Function
-  updateUserTickers: Function
 } = {
+  user: null,
   userTickers: [],
   fetchUserTickers: () => {},
-  updateUserTickers: () => {},
 }
 
 const MeContext = createContext(defaultValue)
 
 const MeProvider: React.FC = ({ children }) => {
   const { token } = useGlobal()
+  const [user, setUser] = useState(null)
   const [userTickers, setUserTickers] = useState<UserTicker[]>([])
 
   useEffect(() => {
     if (token) {
-      const fetchUser = async () => {
-        await api.get('/users')
-      }
-
       fetchUser()
+      fetchUserTickers()
     }
   }, [token])
 
-  const fetchUserTickers = async () => {
-    const { data } = await axios.get(
-      `${process.env.NEXT_PUBLIC_API_URL}/user-tickers`,
-    )
+  const fetchUser = async () => {
+    const { data } = await api.get('/users')
+    setUser(data)
+  }
 
+  const fetchUserTickers = async () => {
+    const { data } = await api.get('/user-tickers')
     setUserTickers(data)
   }
 
-  const updateUserTickers = async (id: string, updateObj: any) => {
-    const idx = userTickers.findIndex((userTicker) => userTicker._id === id)
-    const userTicker = userTickers[idx]
-    Object.assign(userTicker, updateObj)
-
-    setUserTickers([
-      ...userTickers.slice(0, idx),
-      userTicker,
-      ...userTickers.slice(idx + 1),
-    ])
-
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/user-tickers/${id}`,
-      updateObj,
-    )
-  }
-
   return (
-    <MeContext.Provider
-      value={{ userTickers, fetchUserTickers, updateUserTickers }}
-    >
+    <MeContext.Provider value={{ user, userTickers, fetchUserTickers }}>
       {children}
     </MeContext.Provider>
   )

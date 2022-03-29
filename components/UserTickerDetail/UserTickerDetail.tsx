@@ -38,7 +38,7 @@ export default function UserTickerDetail({
   userTicker,
 }: UserTickerDetailProps) {
   const { socket, connectSocket } = useSocket()
-  const { fetchUserTickers, updateUserTickers } = useMe()
+  const { fetchUserTickers } = useMe()
   const [logs, setLogs] = useState<string[]>([])
   const [initDisabled, setInitDisabled] = useState<boolean>(false)
   const [startDisabled, setStartDisabled] = useState<boolean>(false)

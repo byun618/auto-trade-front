@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import axios from 'axios'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
@@ -9,6 +8,7 @@ import TickerBottomSheet from '../components/AddTicker/TickerBottomSheet'
 import GeneralButton from '../components/public/GeneralButton'
 import Page from '../components/public/Page'
 import { useGlobal } from '../contexts/global'
+import api from '../lib/api'
 
 const Wrapper = styled.div`
   display: flex;
@@ -70,7 +70,7 @@ const AddTicker: NextPage = () => {
   const onSubmitTicker = async () => {
     setIsModalOpen(false)
 
-    await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/user-tickers`, {
+    await api.post('/user-tickers', {
       name: select,
       start: Number(start),
       elapse: Number(elapse),
