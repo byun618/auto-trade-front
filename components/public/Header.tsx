@@ -3,6 +3,7 @@ import { NextRouter } from 'next/router'
 import { RefObject } from 'react'
 import Arrow from '../../assets/png/arrow.png'
 import Plus from '../../assets/png/plus.png'
+import User from '../../assets/png/user.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
 import Button from './Button'
 import Image from './Image'
@@ -15,7 +16,7 @@ interface HeaderProps {
   router: NextRouter
   title: string
   left?: HeaderButtonTypes
-  right?: HeaderButtonTypes
+  right?: HeaderButtonTypes[]
   headerRef: RefObject<HTMLInputElement>
 }
 
@@ -38,7 +39,7 @@ const Wrapper = styled.div`
 `
 
 const HeaderContent = styled.div`
-  min-width: 25%;
+  min-width: 30%;
   display: flex;
   align-items: center;
 `
@@ -59,7 +60,11 @@ const Center = styled.div`
   color: #000;
 `
 
-const Right = styled(HeaderContent)`
+const RightWrapper = styled(HeaderContent)`
+  justify-content: flex-end;
+`
+
+const Right = styled.div`
   justify-content: flex-end;
 `
 
@@ -83,6 +88,10 @@ export default function Header({
 
   const onPressPlus = () => {
     router.push('/add-ticker')
+  }
+
+  const onPressUser = () => {
+    router.push('/my-page')
   }
 
   const renderButtons = (type: HeaderButtonTypes) => {
@@ -109,16 +118,29 @@ export default function Header({
             />
           </HeaderButton>
         )
+      case 'user':
+        return (
+          <HeaderButton onClick={onPressUser}>
+            <Image
+              src={User}
+              alt="user"
+              width={BUTTON_IMAGE_SIZE}
+              height={BUTTON_IMAGE_SIZE}
+            />
+          </HeaderButton>
+        )
     }
   }
 
   return (
-    <>
-      <Wrapper ref={headerRef}>
-        <Left>{left && renderButtons(left)}</Left>
-        <Center>{title}</Center>
-        <Right>{right && renderButtons(right)}</Right>
-      </Wrapper>
-    </>
+    <Wrapper ref={headerRef}>
+      <Left>{left && renderButtons(left)}</Left>
+      <Center>{title}</Center>
+      <RightWrapper>
+        {right?.map((type, index) => (
+          <Right key={index}>{renderButtons(type)}</Right>
+        ))}
+      </RightWrapper>
+    </Wrapper>
   )
 }

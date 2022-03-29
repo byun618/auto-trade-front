@@ -29,9 +29,9 @@ const Home = () => {
     return token
       ? {
           headerTitle: '홈',
-          headerRight: 'plus',
+          headerRight: ['plus', 'user'],
         }
-      : { headerTitle: '로그인', headerRight: null }
+      : { headerTitle: '로그인', headerRight: [] }
   }, [token])
 
   return (

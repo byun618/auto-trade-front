@@ -8,7 +8,7 @@ interface PageProps {
   router: NextRouter
   headerTitle: string
   headerLeft?: HeaderButtonTypes
-  headerRight?: HeaderButtonTypes
+  headerRight?: HeaderButtonTypes[]
   noHeader?: boolean
   full?: boolean
   children: ReactNode
@@ -64,6 +64,7 @@ export default function Page({
           headerRef={headerRef}
         />
       )}
+
       <Content
         headerHeight={headerHeight}
         full={full}

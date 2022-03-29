@@ -1,17 +1,17 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import axios from 'axios'
-import { get } from '../lib/fetcher'
 import api from '../lib/api'
 
 const defaultValue: {
   token: string | null
   fetchToken: Function
   updateToken: Function
+  removeToken: Function
   tickers: string[] | null
 } = {
   token: null,
   fetchToken: () => {},
   updateToken: () => {},
+  removeToken: () => {},
   tickers: null,
 }
 
@@ -40,13 +40,20 @@ const GlobalProvider: React.FC = ({ children }) => {
     fetchToken()
   }
 
+  const removeToken = () => {
+    localStorage.removeItem('token')
+    setToken(null)
+  }
+
   const fetchTickers = async () => {
     const { data } = await api.get('/tickers')
     setTickers(data)
   }
 
   return (
-    <GlobalContext.Provider value={{ token, fetchToken, updateToken, tickers }}>
+    <GlobalContext.Provider
+      value={{ token, fetchToken, updateToken, removeToken, tickers }}
+    >
       {children}
     </GlobalContext.Provider>
   )
