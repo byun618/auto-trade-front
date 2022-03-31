@@ -17,7 +17,6 @@ const MyPage: NextPage = () => {
 
   return (
     <Page router={router} headerTitle="마이페이지" headerLeft="back">
-      {user.email}
       <GeneralButton onClick={onClickLogout}>로그아웃</GeneralButton>
     </Page>
   )
