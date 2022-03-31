@@ -12,7 +12,6 @@ interface UserTickerDetailProps {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 0 20px;
 `
 
 const ButtonContainer = styled.div`
@@ -88,11 +87,11 @@ export default function UserTickerDetail({
   const handleMessage = async (rsp: any) => {
     const { message } = rsp
 
-    if (message === '이미 프로그램이 동작중입니다.') {
+    if (message === '프로그램이 이미 동작 중입니다.') {
       enableStop()
     }
 
-    if (message === '이미 프로그램이 초기화되었습니다.') {
+    if (message === '프로그램이 이미 초기화되었습니다.') {
       enableStart()
     }
 
@@ -148,9 +147,7 @@ export default function UserTickerDetail({
       </ButtonContainer>
       <LogWrapper>
         {logs.map((log, index) => (
-          <>
-            <div key={index}>{log}</div>
-          </>
+          <div key={index}>{log}</div>
         ))}
       </LogWrapper>
     </Wrapper>

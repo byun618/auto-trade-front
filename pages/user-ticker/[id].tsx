@@ -8,7 +8,7 @@ import UserTickerDetail from '../../components/UserTickerDetail/UserTickerDetail
 import { useMe } from '../../contexts/me'
 
 const UserTickerDetailWrapper = styled.div`
-  margin-top: 40px;
+  margin-top: 30px;
 `
 
 const MyTickerDetail: NextPage = () => {
@@ -25,7 +25,7 @@ const MyTickerDetail: NextPage = () => {
   }, [userTickers])
 
   return (
-    <Page router={router} headerLeft="back" headerTitle="내 티커" full>
+    <Page router={router} headerLeft="back" headerTitle="내 티커">
       {userTicker && (
         <UserTickerDetailWrapper>
           <UserTickerDetail userTicker={userTicker} />
