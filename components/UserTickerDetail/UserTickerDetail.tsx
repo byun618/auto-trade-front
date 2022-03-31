@@ -2,7 +2,9 @@ import styled from '@emotion/styled'
 import { useEffect, useState } from 'react'
 import { useMe } from '../../contexts/me'
 import { useSocket } from '../../contexts/socket'
+import api from '../../lib/api'
 import UserTicker, { UserTicker as IUserTicker } from '../Home/UserTicker'
+import Logs, { UserTickerLog } from '../Logs/Logs'
 import GeneralButton from '../public/GeneralButton'
 
 interface UserTickerDetailProps {
@@ -38,10 +40,28 @@ export default function UserTickerDetail({
 }: UserTickerDetailProps) {
   const { socket, connectSocket } = useSocket()
   const { fetchUserTickers } = useMe()
-  const [logs, setLogs] = useState<string[]>([])
   const [initDisabled, setInitDisabled] = useState<boolean>(false)
   const [startDisabled, setStartDisabled] = useState<boolean>(false)
   const [stopDisabled, setStopDisabled] = useState<boolean>(false)
+  const [userTickerLogs, setUserTickerLogs] = useState<UserTickerLog[]>([])
+
+  useEffect(() => {
+    connectSocket(userTicker._id)
+    fetchUserTickerLogs()
+  }, [])
+
+  useEffect(() => {
+    if (socket) {
+      onClickInit()
+
+      socket.on('message', handleMessage)
+      socket.on('error', handleError)
+
+      return () => {
+        socket.disconnect()
+      }
+    }
+  }, [socket])
 
   const enableInit = () => {
     setInitDisabled(false)
@@ -80,10 +100,6 @@ export default function UserTickerDetail({
     socket?.emit('current-price')
   }
 
-  const log = (message: string) => {
-    setLogs((old) => [...old, message])
-  }
-
   const handleMessage = async (rsp: any) => {
     const { message } = rsp
 
@@ -100,33 +116,21 @@ export default function UserTickerDetail({
     }
 
     await fetchUserTickers()
-
-    log(message)
+    await fetchUserTickerLogs()
   }
 
   const handleError = async (rsp: any) => {
-    const { message } = rsp
-    log(message)
-
+    await fetchUserTickerLogs()
     await onClickStop()
   }
 
-  useEffect(() => {
-    connectSocket(userTicker._id)
-  }, [])
+  const fetchUserTickerLogs = async () => {
+    const { data: userTickerLogs } = await api.get(
+      `/user-ticker-logs/${userTicker._id}`,
+    )
 
-  useEffect(() => {
-    if (socket) {
-      onClickInit()
-
-      socket.on('message', handleMessage)
-      socket.on('error', handleError)
-
-      return () => {
-        socket.disconnect()
-      }
-    }
-  }, [socket])
+    setUserTickerLogs(userTickerLogs)
+  }
 
   return (
     <Wrapper>
@@ -145,11 +149,7 @@ export default function UserTickerDetail({
           현재가
         </GeneralButton>
       </ButtonContainer>
-      <LogWrapper>
-        {logs.map((log, index) => (
-          <div key={index}>{log}</div>
-        ))}
-      </LogWrapper>
+      <Logs userTickerLogs={userTickerLogs} />
     </Wrapper>
   )
 }
