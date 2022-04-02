@@ -16,12 +16,15 @@ const SocketProvider: React.FC = ({ children }) => {
   const [socket, setSocket] = useState<Socket | null>(null)
 
   const connectSocket = (userTickerId: string) => {
-    const tempSocket = socketIOClient(String(process.env.NEXT_PUBLIC_API_URL), {
-      query: {
-        userTickerId,
+    const tempSocket = socketIOClient(
+      `${String(process.env.NEXT_PUBLIC_PROGRAM_URL)}/${userTickerId}`,
+      {
+        query: {
+          userTickerId,
+        },
+        transports: ['websocket'],
       },
-      transports: ['websocket'],
-    })
+    )
 
     setSocket(tempSocket)
   }

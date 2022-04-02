@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: auto-trade-front
-          image: byun618/auto-trade-front:0.0.2-pre1
+          image: byun618/auto-trade-front:0.0.2-pre2
           args: ['yarn', 'start']
           resources:
             requests:

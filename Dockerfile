@@ -7,6 +7,7 @@ ENV TZ=Asia/Seoul
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 ARG NEXT_PUBLIC_API_URL=https://s6napi.duckdns.org
+ARG NEXT_PUBLIC_PROGRAM_URL=https://s6nprogram.duckdns.org
 
 COPY . .
 
