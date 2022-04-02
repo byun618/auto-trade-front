@@ -1,7 +1,6 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
-import UserTickerList from '../components/Home/UserTickerList'
 import Login from '../components/Login/Login'
 import Page from '../components/public/Page'
 import { useGlobal } from '../contexts/global'
@@ -37,14 +36,7 @@ const Home = () => {
   return (
     loaded && (
       <Page router={router} {...pageProps} full>
-        {token ? (
-          <>
-            <Title>내 티커</Title>
-            <UserTickerList />
-          </>
-        ) : (
-          <Login />
-        )}
+        {token ? <>Home</> : <Login />}
       </Page>
     )
   )
