@@ -1,6 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { useEffect, useMemo, useState } from 'react'
+import Coin from '../components/Coin/Coin'
 import Login from '../components/Login/Login'
 import Page from '../components/public/Page'
 import { useGlobal } from '../contexts/global'
@@ -27,16 +28,16 @@ const Home = () => {
   const pageProps = useMemo(() => {
     return token
       ? {
-          headerTitle: '홈',
-          headerRight: ['plus', 'user'],
+          headerTitle: '코인',
+          headerRight: ['user'],
         }
-      : { headerTitle: '로그인', headerRight: [] }
+      : { headerTitle: '로그인', headerRight: [], noNavbar: true }
   }, [token])
 
   return (
     loaded && (
-      <Page router={router} {...pageProps} full>
-        {token ? <>Home</> : <Login />}
+      <Page router={router} {...pageProps}>
+        {token ? <Coin /> : <Login />}
       </Page>
     )
   )

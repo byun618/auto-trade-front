@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
-import { RefObject } from 'react'
+import { useRouter } from 'next/router'
+import { RefObject, useCallback } from 'react'
 import { DEFAULT_MARGIN, NAVBAR_HEIGHT } from '../../lib/constants'
+import nav from '../../lib/nav'
 import Button from './Button'
 
 interface NavbarProps {
@@ -37,14 +39,27 @@ const Content = styled(Button)`
 `
 
 export default function Navbar({ headerHeight, navbarRef }: NavbarProps) {
+  const router = useRouter()
+
+  const goPage = useCallback(
+    (path: string) => {
+      router.push(path)
+    },
+    [router],
+  )
+
   return (
     <Wrapper ref={navbarRef} headerHeight={headerHeight}>
-      <Content onClick={() => {}}>asdas</Content>
-      <Content onClick={() => {}}>asdas</Content>
-      <Content onClick={() => {}}>asdas</Content>
-      <Content onClick={() => {}}>asdas</Content>
-      <Content onClick={() => {}}>asdas</Content>
-      <Content onClick={() => {}}>asdas</Content>
+      {nav.map((item, index) => (
+        <Content
+          key={index}
+          onClick={() => {
+            goPage(`${item.path}`)
+          }}
+        >
+          {item.title}
+        </Content>
+      ))}
     </Wrapper>
   )
 }

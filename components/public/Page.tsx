@@ -11,6 +11,7 @@ interface PageProps {
   headerLeft?: HeaderButtonTypes
   headerRight?: HeaderButtonTypes[]
   noHeader?: boolean
+  noNavbar?: boolean
   full?: boolean
   children: ReactNode
   backgroundColor?: string
@@ -41,6 +42,7 @@ export default function Page({
   headerLeft,
   headerRight,
   noHeader = false,
+  noNavbar = false,
   full = false,
   children,
   backgroundColor = '#f1f1f1',
@@ -56,7 +58,11 @@ export default function Page({
   }, [])
 
   const navHeight = useMemo(() => {
-    return navbarRef.current?.clientHeight ?? 40
+    if (noNavbar) {
+      return 0
+    } else {
+      return navbarRef.current?.clientHeight ?? 40
+    }
   }, [])
 
   return (
@@ -70,7 +76,9 @@ export default function Page({
           headerRef={headerRef}
         />
       )}
-      <Navbar headerHeight={headerHeight} navbarRef={navbarRef} />
+      {!noNavbar && (
+        <Navbar headerHeight={headerHeight} navbarRef={navbarRef} />
+      )}
       <Content
         headerHeight={headerHeight + navHeight}
         full={full}
