@@ -1,6 +1,5 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useState } from 'react'
 import socketIOClient, { Socket } from 'socket.io-client'
-import { useMe } from './me'
 
 const defaultValue: {
   socket: Socket | null
@@ -17,8 +16,9 @@ const SocketProvider: React.FC = ({ children }) => {
 
   const connectSocket = (userTickerId: string) => {
     const tempSocket = socketIOClient(
-      `${String(process.env.NEXT_PUBLIC_PROGRAM_URL)}/${userTickerId}`,
+      `${String(process.env.NEXT_PUBLIC_PROGRAM_URL)}`,
       {
+        path: `/${userTickerId}`,
         query: {
           userTickerId,
         },
