@@ -33,9 +33,11 @@ const Wrapper = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-
-  background-color: #fff;
   padding: 0 ${DEFAULT_MARGIN}vw;
+
+  background-color: #366e88;
+
+  color: #f2f2f2;
 `
 
 const HeaderContent = styled.div`
@@ -56,8 +58,6 @@ const Center = styled.div`
   font-size: 17px;
   font-weight: 600;
   text-align: center;
-
-  color: #000;
 `
 
 const RightWrapper = styled(HeaderContent)`
@@ -70,7 +70,6 @@ const Right = styled.div`
 
 const HeaderButton = styled(Button)`
   padding: 2vw;
-  color: #333;
   display: flex;
   flex-direction: row;
 `

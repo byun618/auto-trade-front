@@ -4,6 +4,11 @@
 export const HEADER_HEIGHT: number = 50
 
 /**
+ * Navbar의 높이
+ */
+export const NAVBAR_HEIGHT: number = 40
+
+/**
  * 로딩 GIF의 기본 사이즈
  */
 export const LOADING_DEFAULT_SIZE: number = 20

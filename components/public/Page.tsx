@@ -3,6 +3,7 @@ import { NextRouter } from 'next/router'
 import { ReactNode, useMemo, useRef } from 'react'
 import { DEFAULT_MARGIN } from '../../lib/constants'
 import Header, { HeaderButtonTypes } from '../public/Header'
+import Navbar from './Navbar'
 
 interface PageProps {
   router: NextRouter
@@ -45,12 +46,17 @@ export default function Page({
   backgroundColor = '#f1f1f1',
 }: PageProps) {
   const headerRef = useRef<HTMLInputElement>(null)
+  const navbarRef = useRef<HTMLInputElement>(null)
   const headerHeight = useMemo(() => {
     if (noHeader) {
       return 0
     } else {
-      return headerRef.current?.clientHeight ?? 44
+      return headerRef.current?.clientHeight ?? 50
     }
+  }, [])
+
+  const navHeight = useMemo(() => {
+    return navbarRef.current?.clientHeight ?? 40
   }, [])
 
   return (
@@ -64,9 +70,9 @@ export default function Page({
           headerRef={headerRef}
         />
       )}
-
+      <Navbar headerHeight={headerHeight} navbarRef={navbarRef} />
       <Content
-        headerHeight={headerHeight}
+        headerHeight={headerHeight + navHeight}
         full={full}
         backgroundColor={backgroundColor}
       >
