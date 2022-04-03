@@ -26,7 +26,7 @@ export default function Modal({ children, isOpen, style }: ModalProps) {
   }
 
   return (
-    <ReactModal isOpen={isOpen} style={style}>
+    <ReactModal isOpen={isOpen} style={style} ariaHideApp={false}>
       {children}
     </ReactModal>
   )

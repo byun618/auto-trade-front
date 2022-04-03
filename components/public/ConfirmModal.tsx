@@ -82,7 +82,7 @@ export default function ConfirmModal({
         content: {
           width: '82vw',
           backgroundColor: '#fff',
-          padding: '20px 18px',
+          padding: '25px 17px',
           borderRadius: 20,
           outline: 'unset',
           border: 'none',
@@ -100,7 +100,6 @@ export default function ConfirmModal({
         </MainWrapper>
         {sub &&
           sub.split('\n').map((text, index) => <Sub key={index}>{text}</Sub>)}
-
         <Buttons>{renderButtons()}</Buttons>
       </>
     </Modal>

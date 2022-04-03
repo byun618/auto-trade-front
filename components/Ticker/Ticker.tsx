@@ -35,7 +35,9 @@ const Ticker = () => {
   const fetchSearchTickerItem = async () => {
     const { data } = await api.get(`/tickers/search/${search}`)
 
-    setTickerItem([data])
+    if (data) {
+      setTickerItem([data])
+    }
   }
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
