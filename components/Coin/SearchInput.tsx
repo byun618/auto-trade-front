@@ -59,6 +59,12 @@ const SearchInput = ({
   onChange,
   onClickSearch,
 }: SearchInputProps) => {
+  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      onClickSearch()
+    }
+  }
+
   return (
     <Wrapper>
       <Input
@@ -68,6 +74,7 @@ const SearchInput = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
+        onKeyDown={onKeyDown}
       />
       <ImageWrapper onClick={onClickSearch}>
         <Image
