@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { ChangeEvent, useEffect, useState } from 'react'
 import api from '../../lib/api'
-import CoinItem, { CoinItem as CoinItemType } from './CoinItem'
+import TickerItem, { TickerItem as TickerItemType } from './TickerItem'
 import SearchInput from './SearchInput'
 
 const Wrapper = styled.div`
@@ -9,7 +9,7 @@ const Wrapper = styled.div`
   flex-direction: column;
 `
 
-const CoinItemList = styled.div`
+const TickerItemList = styled.div`
   margin-top: 30px;
   flex-grow: 1;
   height: 100%;
@@ -19,23 +19,23 @@ const CoinItemList = styled.div`
   }
 `
 
-const Coin = () => {
+const Ticker = () => {
   const [search, setSearch] = useState<string>('')
-  const [coinItem, setCoinItem] = useState<CoinItemType[]>([])
+  const [tickerItem, setTickerItem] = useState<TickerItemType[]>([])
 
   useEffect(() => {
-    fetchCoinItem()
+    fetchTickerItem()
   }, [])
 
-  const fetchCoinItem = async () => {
+  const fetchTickerItem = async () => {
     const { data } = await api.get('/tickers/verbose')
-    setCoinItem(data)
+    setTickerItem(data)
   }
 
-  const fetchSearchCoinItem = async () => {
+  const fetchSearchTickerItem = async () => {
     const { data } = await api.get(`/tickers/search/${search}`)
 
-    setCoinItem([data])
+    setTickerItem([data])
   }
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -44,9 +44,9 @@ const Coin = () => {
 
   const onClickSearch = () => {
     if (search === '') {
-      fetchCoinItem()
+      fetchTickerItem()
     } else {
-      fetchSearchCoinItem()
+      fetchSearchTickerItem()
     }
   }
 
@@ -61,13 +61,13 @@ const Coin = () => {
         onChange={onChangeSearch}
         onClickSearch={onClickSearch}
       />
-      <CoinItemList>
-        {coinItem.map((coinItem, index) => (
-          <CoinItem key={index} coinItem={coinItem} />
+      <TickerItemList>
+        {tickerItem.map((tickerItem, index) => (
+          <TickerItem key={index} tickerItem={tickerItem} />
         ))}
-      </CoinItemList>
+      </TickerItemList>
     </Wrapper>
   )
 }
 
-export default Coin
+export default Ticker

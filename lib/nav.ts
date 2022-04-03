@@ -6,7 +6,7 @@ interface Nav {
 
 const nav: Nav[] = [
   {
-    name: 'Coin',
+    name: 'Ticker',
     title: '코인',
     path: '/',
   },

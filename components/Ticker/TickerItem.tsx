@@ -3,14 +3,14 @@ import Button from '../public/Button'
 import GeneralButton from '../public/GeneralButton'
 import TickerIcon from '../public/TickerIcon'
 
-export type CoinItem = {
+export type TickerItem = {
   market: string
   korean_name: string
   english_name: string
 }
 
-interface CoinItemProps {
-  coinItem: CoinItem
+interface TickerItemProps {
+  tickerItem: TickerItem
 }
 
 const Wrapper = styled.div`
@@ -51,17 +51,17 @@ const SelectButton = styled(Button)`
   background-color: #366e88;
 `
 
-function CoinItem({ coinItem }: CoinItemProps) {
+function TickerItem({ tickerItem }: TickerItemProps) {
   return (
     <Wrapper>
-      <TickerIcon name={coinItem.market} size={30} />
+      <TickerIcon name={tickerItem.market} size={30} />
       <NameWrapper>
-        <Name>{coinItem.korean_name}</Name>
-        <Name>{coinItem.market}</Name>
+        <Name>{tickerItem.korean_name}</Name>
+        <Name>{tickerItem.market}</Name>
       </NameWrapper>
       <SelectButton onClick={() => {}}>선택</SelectButton>
     </Wrapper>
   )
 }
 
-export default CoinItem
+export default TickerItem

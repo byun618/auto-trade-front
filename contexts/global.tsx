@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from 'react'
-import { CoinItem } from '../components/Coin/CoinItem'
 import api from '../lib/api'
 
 const defaultValue: {
@@ -7,24 +6,17 @@ const defaultValue: {
   fetchToken: Function
   updateToken: Function
   removeToken: Function
-  tickers: CoinItem[] | null
 } = {
   token: null,
   fetchToken: () => {},
   updateToken: () => {},
   removeToken: () => {},
-  tickers: null,
 }
 
 const GlobalContext = createContext(defaultValue)
 
 const GlobalProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(null)
-  const [tickers, setTickers] = useState<CoinItem[] | null>(null)
-
-  useEffect(() => {
-    fetchTickers()
-  }, [])
 
   const fetchToken = () => {
     const token = localStorage.getItem('token')
@@ -46,14 +38,9 @@ const GlobalProvider: React.FC = ({ children }) => {
     setToken(null)
   }
 
-  const fetchTickers = async () => {
-    const { data } = await api.get('/tickers/verbose')
-    setTickers(data)
-  }
-
   return (
     <GlobalContext.Provider
-      value={{ token, fetchToken, updateToken, removeToken, tickers }}
+      value={{ token, fetchToken, updateToken, removeToken }}
     >
       {children}
     </GlobalContext.Provider>
