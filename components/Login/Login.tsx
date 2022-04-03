@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import type { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 import Logo from '../../assets/png/logo-120x120.png'
 import { useGlobal } from '../../contexts/global'
@@ -35,6 +36,7 @@ const ButtonWrapper = styled.div`
 `
 
 const Login: NextPage = () => {
+  const router = useRouter()
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
   const { updateToken } = useGlobal()
@@ -56,6 +58,8 @@ const Login: NextPage = () => {
     })
 
     updateToken(token)
+
+    router.push('/')
   }
 
   return (

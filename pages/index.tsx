@@ -1,19 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
-import { useEffect, useMemo, useState } from 'react'
-import Ticker from '../components/Ticker/Ticker'
-import Login from '../components/Login/Login'
-import Page from '../components/public/Page'
+import { useEffect, useState } from 'react'
 import { useGlobal } from '../contexts/global'
-
-const Title = styled.div`
-  font-weight: 700;
-  font-size: 20px;
-  line-height: 24px;
-  color: #333333;
-
-  padding: 40px 20px 30px 20px;
-`
 
 const Home = () => {
   const router = useRouter()
@@ -25,22 +13,17 @@ const Home = () => {
     setLoaded(true)
   }, [])
 
-  const pageProps = useMemo(() => {
-    return token
-      ? {
-          headerTitle: '코인',
-          headerRight: ['user'],
-        }
-      : { headerTitle: '로그인', headerRight: [], noNavbar: true }
-  }, [token])
+  useEffect(() => {
+    if (loaded) {
+      if (token) {
+        router.push('/ticker')
+      } else {
+        router.push('/login')
+      }
+    }
+  }, [loaded, token])
 
-  return (
-    loaded && (
-      <Page router={router} {...pageProps}>
-        {token ? <Ticker /> : <Login />}
-      </Page>
-    )
-  )
+  return <></>
 }
 
 export default Home

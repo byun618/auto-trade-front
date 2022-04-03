@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
 import ConfirmModal, { ModalButtonProps } from '../public/ConfirmModal'
 import TickerIcon from '../public/TickerIcon'
-import { TickerItem } from './TickerItem'
+import { Ticker } from './Ticker'
 
 const TICKER_ICON_SIZE = 50
 
 interface TickerAddModalProps {
   isOpen: boolean
   buttons: ModalButtonProps[]
-  tickerItem: TickerItem
+  ticker: Ticker
   startTime: string
   timeInterval: string
 }
@@ -46,19 +46,19 @@ const Text = styled.div`
   color: #808080;
 `
 
-export default function AddTickeModal({
+export default function AddProgramModal({
   isOpen,
   buttons,
-  tickerItem,
+  ticker,
   startTime,
   timeInterval,
 }: TickerAddModalProps) {
   return (
     <ConfirmModal isOpen={isOpen} main="위 설정이 맞나요?" buttons={buttons}>
       <Wrapper>
-        <TickerIcon name={tickerItem.market} size={TICKER_ICON_SIZE} />
+        <TickerIcon name={ticker.market} size={TICKER_ICON_SIZE} />
         <TextWrapper>
-          {tickerItem.korean_name} {tickerItem.market}
+          {ticker.korean_name} {ticker.market}
           <Text>
             {startTime}시부터 {timeInterval}시간
           </Text>
