@@ -13,7 +13,6 @@ interface SearchInputProps {
   value: string
   placeholder?: string
   onChange: ChangeEventHandler<HTMLInputElement>
-  onClickSearch: () => void
 }
 
 const Wrapper = styled.div`
@@ -32,6 +31,8 @@ const Input = styled.input`
   font-size: 12px;
   line-height: 14px;
   color: #333333;
+
+  margin-left: 5px;
 
   border: none;
   width: 100%;
@@ -57,16 +58,15 @@ const SearchInput = ({
   value,
   placeholder,
   onChange,
-  onClickSearch,
 }: SearchInputProps) => {
-  const onKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter') {
-      onClickSearch()
-    }
-  }
-
   return (
     <Wrapper>
+      <Image
+        src={SearchIcon}
+        alt="search"
+        width={ICON_SIZE}
+        height={ICON_SIZE}
+      />
       <Input
         style={style}
         type={type}
@@ -74,16 +74,7 @@ const SearchInput = ({
         value={value}
         placeholder={placeholder}
         onChange={onChange}
-        onKeyDown={onKeyDown}
       />
-      <ImageWrapper onClick={onClickSearch}>
-        <Image
-          src={SearchIcon}
-          alt="search"
-          width={ICON_SIZE}
-          height={ICON_SIZE}
-        />
-      </ImageWrapper>
     </Wrapper>
   )
 }

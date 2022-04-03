@@ -4,7 +4,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import Page from '../../components/public/Page'
 import SearchInput from '../../components/Ticker/SearchInput'
 import Ticker, { Ticker as TickerType } from '../../components/Ticker/Ticker'
-import api from '../../lib/api'
+import { useGlobal } from '../../contexts/global'
 
 const TickerList = styled.div`
   margin-top: 30px;
@@ -19,35 +19,30 @@ const TickerList = styled.div`
 const TickerPage = () => {
   const router = useRouter()
   const [search, setSearch] = useState<string>('')
-  const [tickers, setTickers] = useState<TickerType[]>([])
+  const { tickers: globalTickers } = useGlobal()
+  const [tickers, setTickers] = useState<TickerType[]>(globalTickers)
 
   useEffect(() => {
-    fetchTicker()
-  }, [])
-
-  const fetchTicker = async () => {
-    const { data } = await api.get('/tickers/verbose')
-    setTickers(data)
-  }
-
-  const fetchSearchTicker = async () => {
-    const { data } = await api.get(`/tickers/search/${search}`)
-
-    if (data) {
-      setTickers([data])
-    }
-  }
+    setTickers(globalTickers)
+  }, [globalTickers])
 
   const onChangeSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    const _search = event.target.value
     setSearch(event.target.value)
-  }
 
-  const onClickSearch = () => {
-    if (search === '') {
-      fetchTicker()
-    } else {
-      fetchSearchTicker()
-    }
+    const tickers = globalTickers.filter((ticker) => {
+      const { market, korean_name, english_name } = ticker
+
+      if (
+        korean_name.includes(_search) ||
+        english_name.toLowerCase().includes(_search.toLowerCase()) ||
+        market.split('-')[1].toLowerCase().includes(_search.toLowerCase())
+      ) {
+        return true
+      }
+    })
+
+    setTickers(tickers)
   }
 
   return (
@@ -59,7 +54,6 @@ const TickerPage = () => {
         value={search}
         placeholder="코인명/티커"
         onChange={onChangeSearch}
-        onClickSearch={onClickSearch}
       />
       <TickerList>
         {tickers.map((ticker, index) => (
