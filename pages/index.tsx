@@ -9,6 +9,7 @@ const Home = () => {
   const { token, fetchToken } = useGlobal()
 
   useEffect(() => {
+    // TODO: global에서 진행해야함
     fetchToken()
     setLoaded(true)
   }, [])

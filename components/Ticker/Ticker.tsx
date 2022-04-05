@@ -1,11 +1,14 @@
 import styled from '@emotion/styled'
 import { ChangeEvent, useState } from 'react'
+import ArrowIcon from '../../assets/png/arrow-black.png'
+import api from '../../lib/api'
 import Button from '../public/Button'
+import Image from '../public/Image'
 import Input from '../public/Input'
 import TickerIcon from '../public/TickerIcon'
 import AddProgramModal from './AddProgramModal'
-import ArrowIcon from '../../assets/png/arrow-black.png'
-import Image from '../public/Image'
+
+const TICKER_ICON_SIZE = 30
 
 export type Ticker = {
   market: string
@@ -25,6 +28,8 @@ const Wrapper = styled.div`
   background-color: white;
   border-radius: 20px;
   padding: 15px;
+
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
 
 const InfoWrapper = styled.div`
@@ -51,7 +56,7 @@ const Name = styled.div``
 
 const Arrow = styled(Button)<{ isFold: boolean }>`
   padding: 10px 16px;
-  transform: rotate(${({ isFold }) => (isFold ? 0 : 180)}deg);
+  transform: rotate(${({ isFold }) => (isFold ? 180 : 0)}deg);
 `
 
 const SettingWrapper = styled.div`
@@ -97,12 +102,14 @@ function Ticker({ ticker }: TickerProps) {
     {
       text: '취소',
       onClick: () => {
-        setIsOpen(false)
+        onClickModalCancel()
       },
     },
     {
       text: '확인',
-      onClick: () => {},
+      onClick: () => {
+        onClickModalSubmit()
+      },
     },
   ]
 
@@ -115,6 +122,7 @@ function Ticker({ ticker }: TickerProps) {
 
     setStartTime(event.target.value)
   }
+
   const onChangeTimeInterval = (event: ChangeEvent<HTMLInputElement>) => {
     const timeInterval = Number(event.target.value)
     if (timeInterval < 1 || timeInterval > 24) {
@@ -125,10 +133,24 @@ function Ticker({ ticker }: TickerProps) {
     setTimeInterval(event.target.value)
   }
 
+  const onClickModalCancel = () => {
+    setIsOpen(false)
+  }
+
+  const onClickModalSubmit = async () => {
+    await api.post('/user-programs', {
+      ticker,
+      startTime: Number(startTime),
+      timeInterval: Number(timeInterval),
+    })
+
+    setIsOpen(false)
+  }
+
   return (
     <Wrapper>
       <InfoWrapper>
-        <TickerIcon name={ticker.market} size={30} />
+        <TickerIcon name={ticker.market} size={TICKER_ICON_SIZE} />
         <NameWrapper>
           <Name>{ticker.korean_name}</Name>
           <Name>{ticker.market}</Name>
