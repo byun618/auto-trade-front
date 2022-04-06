@@ -26,7 +26,7 @@ const Wrapper = styled(Button)<ButtonProps>`
   font-size: 15px;
   line-height: 18px;
 
-  width: 100%;
+  // width: 100%;
 `
 
 export default function GeneralButton(props: CSSProperties & ButtonProps) {

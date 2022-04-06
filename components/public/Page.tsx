@@ -34,6 +34,7 @@ const Content = styled.div<ContentProps>`
   margin-top: ${({ headerHeight }) => headerHeight}px;
   // margin-bottom: ${DEFAULT_MARGIN}vw;
   background-color: ${({ backgroundColor }) => backgroundColor};
+  position: relative;
 `
 
 export default function Page({

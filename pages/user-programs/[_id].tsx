@@ -23,9 +23,7 @@ const UserProgramDetailPage: NextPage = ({ userProgram }: any) => {
   return (
     userProgram && (
       <Page router={router} headerTitle="내 프로그램" headerLeft="back">
-        <div style={{ position: 'relative', flexGrow: '1' }}>
-          <UserProgramDetail userProgram={userProgram} />
-        </div>
+        <UserProgramDetail userProgram={userProgram} />
       </Page>
     )
   )
