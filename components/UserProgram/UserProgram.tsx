@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import Button from '../public/Button'
 import TickerIcon from '../public/TickerIcon'
 
@@ -6,6 +7,7 @@ const TICKER_ICON_SIZE = 30
 
 interface UserProgramProps {
   userProgram: any
+  disabled?: boolean
 }
 
 const Wrapper = styled(Button)`
@@ -77,9 +79,16 @@ const StatusWrapper = styled(Content)`
   text-align: right;
 `
 
-function UserProgram({ userProgram }: UserProgramProps) {
+function UserProgram({ userProgram, disabled = false }: UserProgramProps) {
+  const router = useRouter()
+
   return (
-    <Wrapper onClick={() => {}}>
+    <Wrapper
+      onClick={() => {
+        router.push(`/user-programs/${userProgram._id}`)
+      }}
+      disabled={disabled}
+    >
       <TitleWrapper>
         <TickerIcon name={userProgram.ticker.market} size={TICKER_ICON_SIZE} />
         <NameWrapper>

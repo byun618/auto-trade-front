@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
 import { RefObject } from 'react'
-import Arrow from '../../assets/png/arrow.png'
+import Arrow from '../../assets/png/arrow-white.png'
 import Plus from '../../assets/png/plus.png'
 import User from '../../assets/png/user.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constants'
@@ -101,7 +101,7 @@ export default function Header({
             <Image
               src={Arrow}
               alt="arrow-left"
-              width={BUTTON_IMAGE_SIZE}
+              width={11}
               height={BUTTON_IMAGE_SIZE}
             />
           </HeaderButton>
