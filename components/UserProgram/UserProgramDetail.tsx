@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
-import { useEffect } from 'react'
+import moment from 'moment-timezone'
+import { useEffect, useState } from 'react'
 import GeneralButton from '../public/GeneralButton'
+import Logs from './Logs'
 import UserProgram from './UserProgram'
 
 interface UserProgramProps {
@@ -34,18 +36,9 @@ const Button = styled(GeneralButton)`
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 `
 
-const LogWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  margin-top: 15px;
-
-  background: rgba(54, 110, 136, 0.3);
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 20px;
-`
-
 function UserProgramDetail({ userProgram }: UserProgramProps) {
+  const [logs, setLgos] = useState([])
+
   return (
     <Wrapper>
       <UserProgram userProgram={userProgram} disabled />
@@ -61,48 +54,7 @@ function UserProgramDetail({ userProgram }: UserProgramProps) {
           현재가
         </Button>
       </ButtonWrappers>
-      <LogWrapper>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-        <div>asdas</div>
-      </LogWrapper>
+      <Logs logs={logs} />
     </Wrapper>
   )
 }
