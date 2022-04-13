@@ -3,15 +3,13 @@ import { useRouter } from 'next/router'
 import Page from '../../components/public/Page'
 import GeneralButton from '../../components/public/GeneralButton'
 import { useGlobal } from '../../contexts/global'
-import { useMe } from '../../contexts/me'
 
 const MyPage: NextPage = () => {
   const router = useRouter()
-  const { user } = useMe()
-  const { removeToken } = useGlobal()
+  const { logOut } = useGlobal()
 
   const onClickLogout = () => {
-    removeToken()
+    logOut()
     router.push('/')
   }
 

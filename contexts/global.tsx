@@ -6,14 +6,20 @@ const defaultValue: {
   token: string | null
   fetchToken: Function
   updateToken: Function
-  removeToken: Function
+  user: any
+  fetchUser: Function
+  logOut: Function
   tickers: Ticker[]
+  fetchTickers: Function
 } = {
   token: null,
   fetchToken: () => {},
   updateToken: () => {},
-  removeToken: () => {},
+  user: null,
+  fetchUser: () => {},
+  logOut: () => {},
   tickers: [],
+  fetchTickers: () => {},
 }
 
 const GlobalContext = createContext(defaultValue)
@@ -21,10 +27,19 @@ const GlobalContext = createContext(defaultValue)
 const GlobalProvider: React.FC = ({ children }) => {
   const [token, setToken] = useState<string | null>(null)
   const [tickers, setTickers] = useState<Ticker[]>([])
+  const [user, setUser] = useState<any>(null)
 
   useEffect(() => {
+    fetchToken()
     fetchTickers()
   }, [])
+
+  useEffect(() => {
+    if (token) {
+      console.log(1)
+      fetchUser()
+    }
+  }, [token])
 
   const fetchToken = () => {
     const token = localStorage.getItem('token')
@@ -46,6 +61,21 @@ const GlobalProvider: React.FC = ({ children }) => {
     setToken(null)
   }
 
+  const fetchUser = async () => {
+    try {
+      const { data } = await api.get('/users')
+
+      setUser(data)
+    } catch (err) {
+      setUser(null)
+    }
+  }
+
+  const logOut = () => {
+    removeToken()
+    setUser(null)
+  }
+
   const fetchTickers = async () => {
     const { data: tickers } = await api.get('/tickers/verbose')
     setTickers(tickers)
@@ -53,7 +83,16 @@ const GlobalProvider: React.FC = ({ children }) => {
 
   return (
     <GlobalContext.Provider
-      value={{ token, fetchToken, updateToken, removeToken, tickers }}
+      value={{
+        token,
+        fetchToken,
+        updateToken,
+        logOut,
+        user,
+        fetchUser,
+        tickers,
+        fetchTickers,
+      }}
     >
       {children}
     </GlobalContext.Provider>

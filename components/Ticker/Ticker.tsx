@@ -1,6 +1,8 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
 import ArrowIcon from '../../assets/png/arrow-black.png'
+import { useGlobal } from '../../contexts/global'
 import api from '../../lib/api'
 import Button from '../public/Button'
 import Image from '../public/Image'
@@ -93,6 +95,8 @@ const SubmitButton = styled(Button)`
 `
 
 function Ticker({ ticker }: TickerProps) {
+  const router = useRouter()
+  const { user } = useGlobal()
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isFold, setIsFold] = useState<boolean>(true)
   const [startTime, setStartTime] = useState<string>('9')
@@ -112,6 +116,15 @@ function Ticker({ ticker }: TickerProps) {
       },
     },
   ]
+
+  const onClickArrow = () => {
+    if (user) {
+      setIsFold(!isFold)
+    } else {
+      alert('로그인이 필요합니다.')
+      router.push('/login')
+    }
+  }
 
   const onChangeStartTime = (event: ChangeEvent<HTMLInputElement>) => {
     const startTime = Number(event.target.value)
@@ -155,12 +168,7 @@ function Ticker({ ticker }: TickerProps) {
           <Name>{ticker.korean_name}</Name>
           <Name>{ticker.market}</Name>
         </NameWrapper>
-        <Arrow
-          isFold={isFold}
-          onClick={() => {
-            setIsFold(!isFold)
-          }}
-        >
+        <Arrow isFold={isFold} onClick={onClickArrow}>
           <Image src={ArrowIcon} alt="arrow" width={19} height={11} />
         </Arrow>
       </InfoWrapper>
