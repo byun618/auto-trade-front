@@ -1,12 +1,12 @@
 module.exports = {
-  extends: ['next', 'prettier'],
-  rules: {
-    '@next/next/no-img-element': 'off',
-    'eslint-disable-next-line': 'off',
-    'react/display-name': 'off',
-    'react-hooks/exhaustive-deps': [
-      'warn',
-    
-    ],
-  },
+  extends: [
+    'next/core-web-vitals',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:eslint-comments/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
+    'plugin:jest/recommended',
+    'plugin:prettier/recommended',
+  ],
+  ignorePatterns: ['node_modules/', 'dist/', 'build/', '.yarn/'],
 }
