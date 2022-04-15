@@ -1,13 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  experimental: {
-    reactRoot: true,
+  images: {
+    domains: ['static.upbit.com'],
   },
-  swcMinify: true,
-  // images: {
-  //   domains: ['d5heyd26xkg7n.cloudfront.net'],
-  // },
 }
 
 module.exports = nextConfig
