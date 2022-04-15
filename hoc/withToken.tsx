@@ -7,9 +7,9 @@ export interface WithTokenProps {
 }
 
 export default function withToken<P extends object>(
-  Component: ComponentType<WithTokenProps>,
+  Component: ComponentType<P & WithTokenProps>,
 ): FC<P & WithTokenProps> {
-  return function () {
+  return function useTokenComponent(props: P) {
     const [status, setStatus] = useState<string>('NOT USER')
     const [loaded, setLoaded] = useState<boolean>(false)
 
@@ -23,6 +23,6 @@ export default function withToken<P extends object>(
       setLoaded(true)
     }, [])
 
-    return <Component status={status} loaded={loaded} />
+    return <Component status={status} loaded={loaded} {...props} />
   }
 }

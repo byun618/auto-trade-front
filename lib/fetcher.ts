@@ -1,45 +1,62 @@
 import Cookies from 'universal-cookie'
-
-type Methods = 'GET' | 'POST'
+import axios, { AxiosError, AxiosResponse, Method } from 'axios'
 
 const cookies: Cookies = new Cookies()
 
+interface RequestPayload {
+  method: Method
+  url: string
+  params?: object
+  data?: object
+}
+
 const token: string = cookies.get('token') ?? ''
 
-async function request(
-  method: Methods,
-  url: string,
-  body?: BodyInit | null,
-): Promise<Response | void> {
+async function request<T>({
+  method,
+  url,
+  params,
+  data,
+}: RequestPayload): Promise<AxiosResponse<T>> {
   try {
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${url}`, {
+    const response = await axios({
       method,
+      url,
+      params,
+      data,
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: body ? JSON.stringify(body) : null,
     })
 
-    const data = await response.json()
-
-    return data
-  } catch (err) {
-    console.log('>>> ', err)
+    return response
+  } catch (err: any) {
+    if (err.response) {
+      const {
+        data: {
+          error: { message },
+        },
+      } = err.response
+      throw new Error(message)
+    }
+    throw err
   }
-
-  // 에러 처리 추가 필요
 }
 
-export function get(
+export async function get<T>(
   url: string,
-  body: BodyInit | null = null,
-): Promise<Response | void> {
-  return request('GET', url, body)
+  params?: object,
+): Promise<AxiosResponse<T>> {
+  return await request({
+    method: 'GET',
+    url,
+    params,
+  })
 }
 
-export function post(
+export async function post<T>(
   url: string,
-  body: BodyInit | null = null,
-): Promise<Response | void> {
-  return request('POST', url, body)
+  data?: object,
+): Promise<AxiosResponse<T>> {
+  return await request({ method: 'POST', url, data })
 }
