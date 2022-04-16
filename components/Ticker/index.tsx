@@ -1,13 +1,11 @@
 import styled from '@emotion/styled'
+import { ChangeEvent, useState } from 'react'
+import { post } from '../../lib/fetcher'
 import { Ticker } from '../../lib/types'
 import Button from '../public/Button'
-import Image from '../public/Image'
-import TickerIcon from './TickerIcon'
-import Arrow from '../../assets/png/arrow-black.png'
-import { ChangeEvent, useState } from 'react'
 import Input from '../public/Input'
 import AddProgramModal from './AddProgramModal'
-import { post } from '../../lib/fetcher'
+import TickerIcon from './TickerIcon'
 
 interface TickerProps {
   ticker: Ticker
@@ -36,6 +34,7 @@ const NameWrapper = styled.div`
 
   margin-left: 10px;
 `
+
 const Text = styled.div`
   font-weight: 600;
   font-size: 12px;

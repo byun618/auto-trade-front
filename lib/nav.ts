@@ -8,7 +8,7 @@ const nav: Nav[] = [
   {
     name: 'Ticker',
     title: '코인',
-    path: '/tickers',
+    path: '/',
   },
   {
     name: 'UserProgram',

@@ -8,11 +8,13 @@ import withToken from '../hoc/withToken'
 import { get } from '../lib/fetcher'
 import { Ticker as TickerType } from '../lib/types'
 
-interface HomeProps {
+interface HomePageProps {
   tickers: TickerType[]
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps<
+  HomePageProps
+> = async () => {
   const { data: tickers } = await get<TickerType[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/tickers/verbose`,
   )
@@ -22,7 +24,9 @@ export const getServerSideProps: GetServerSideProps = async () => {
   }
 }
 
-const Home: FunctionComponent<HomeProps> = ({ tickers: originalTickers }) => {
+const Home: FunctionComponent<HomePageProps> = ({
+  tickers: originalTickers,
+}) => {
   const router = useRouter()
   const [search, setSearch] = useState<string>('')
   const [tickers, setTickers] = useState<TickerType[]>(originalTickers)
