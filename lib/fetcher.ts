@@ -31,6 +31,7 @@ async function request<T>({
 
     return response
   } catch (err: any) {
+    console.log(err)
     if (err.response) {
       const {
         data: {
