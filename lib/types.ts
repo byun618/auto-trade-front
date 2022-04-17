@@ -11,6 +11,7 @@ export type User = {
 }
 
 export type UserProgram = {
+  _id: string
   user: User
   no: number
   ticker: Ticker

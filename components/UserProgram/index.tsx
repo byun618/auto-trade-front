@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { UserProgram as UserProgramType } from '../../lib/types'
 import Button from '../public/Button'
 import TickerIcon from '../Ticker/TickerIcon'
@@ -69,12 +70,13 @@ const StatusWrapper = styled(Content)`
 `
 
 function UserProgram({ userProgram }: UserProgramProps) {
+  const router = useRouter()
   const { ticker } = userProgram
 
   return (
     <Wrapper
       onClick={() => {
-        console.log(1)
+        router.push(`/user-programs/${userProgram._id}`)
       }}
     >
       <LabelWrapper>
