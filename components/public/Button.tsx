@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode } from 'react'
 import { LOADING_DEFAULT_SIZE } from '../../lib/constants'
 import Loading from './Loading'
 
-interface ButtonProps {
+export interface ButtonProps {
   onClick: () => void
   children: ReactNode
   disabled?: boolean

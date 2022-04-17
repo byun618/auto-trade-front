@@ -4,7 +4,6 @@ import { ChangeEvent, FunctionComponent, useEffect, useState } from 'react'
 import Page from '../components/public/Page'
 import Search from '../components/Ticker/Search'
 import TickerList from '../components/Ticker/TickerList'
-import withToken from '../hoc/withToken'
 import { get } from '../lib/fetcher'
 import { Ticker as TickerType } from '../lib/types'
 
@@ -68,4 +67,4 @@ const Home: FunctionComponent<HomePageProps> = ({
   )
 }
 
-export default withToken(Home)
+export default Home
