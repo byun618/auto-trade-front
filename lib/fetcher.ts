@@ -1,7 +1,5 @@
 import axios, { AxiosResponse, Method } from 'axios'
-import Cookies from 'universal-cookie'
-
-const cookies: Cookies = new Cookies()
+import { get as getCookie } from './helper/cookie'
 
 interface RequestPayload {
   method: Method
@@ -17,7 +15,7 @@ async function request<T>({
   data,
 }: RequestPayload): Promise<AxiosResponse<T>> {
   try {
-    const token: string = cookies.get('token') ?? ''
+    const token: string = getCookie('token') ?? ''
 
     const response = await axios({
       method,
@@ -32,6 +30,7 @@ async function request<T>({
     return response
   } catch (err: any) {
     console.log(err)
+
     if (err.response) {
       const {
         data: {
