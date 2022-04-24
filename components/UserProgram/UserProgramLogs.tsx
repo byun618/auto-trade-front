@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
+import { UserProgramLog } from '../../lib/types'
 
 interface ProgramLogsProps {
-  programLogs: any[]
+  userProgramLogs: UserProgramLog[]
 }
 
 const Wrapper = styled.div`
@@ -51,7 +52,7 @@ const Message = styled(Content)`
 `
 
 const Time = styled(Content)`
-  padding-left: 1px;
+  padding-left: 3px;
   align-self: flex-end;
 
   font-weight: 500;
@@ -79,19 +80,19 @@ const Date = styled(Content)`
   border-radius: 15px;
 `
 
-function ProgramLogs({ programLogs }: ProgramLogsProps) {
+function UserProgramLogs({ userProgramLogs }: ProgramLogsProps) {
   return (
     <Wrapper>
-      {programLogs.map((programLog, index) => (
+      {userProgramLogs.map((userProgramLog, index) => (
         <ProgramLogWrapper key={index}>
-          {programLog.logs.map((log: any, idx: number) => (
+          {userProgramLog.logs.map((log, idx: number) => (
             <LogWrapper key={idx}>
               <Message>{log.message}</Message>
-              <Time>{log.time}</Time>
+              <Time>{log.createdAt}</Time>
             </LogWrapper>
           ))}
           <DateWrapper>
-            <Date>{programLog.date}</Date>
+            <Date>{userProgramLog.date}</Date>
           </DateWrapper>
         </ProgramLogWrapper>
       ))}
@@ -99,4 +100,4 @@ function ProgramLogs({ programLogs }: ProgramLogsProps) {
   )
 }
 
-export default ProgramLogs
+export default UserProgramLogs

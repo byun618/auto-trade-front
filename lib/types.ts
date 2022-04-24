@@ -16,4 +16,20 @@ export type UserProgram = {
   ticker: Ticker
   startTime: number
   timeInterval: number
+  buyTime?: string
+  sellTime?: string
+  started?: boolean
+  targetPrice?: number
+  isHold?: boolean
+  isSell?: boolean
+}
+
+export type Log = {
+  message: string
+  createdAt: string
+}
+
+export type UserProgramLog = {
+  date: string
+  logs: Log[]
 }

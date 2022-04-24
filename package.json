@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.8.1",
     "axios": "^0.26.1",
     "lodash": "^4.17.21",
+    "moment-timezone": "^0.5.34",
     "next": "12.1.5",
     "react": "18.0.0",
     "react-dom": "18.0.0",

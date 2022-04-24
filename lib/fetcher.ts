@@ -60,3 +60,7 @@ export async function post<T>(
 ): Promise<AxiosResponse<T>> {
   return await request({ method: 'POST', url, data })
 }
+
+export async function del(url: string, params?: object) {
+  return await request({ method: 'DELETE', url, params })
+}

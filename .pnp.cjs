@@ -56,6 +56,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:4.0.0"],\
             ["jest", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:27.5.1"],\
             ["lodash", "npm:4.17.21"],\
+            ["moment-timezone", "npm:0.5.34"],\
             ["next", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:12.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["react", "npm:18.0.0"],\
@@ -2474,6 +2475,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["eslint-plugin-prettier", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:4.0.0"],\
             ["jest", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:27.5.1"],\
             ["lodash", "npm:4.17.21"],\
+            ["moment-timezone", "npm:0.5.34"],\
             ["next", "virtual:65ad179689966b83fb1eff6329c1a7d1d982618ce3d46cb007aee1272c98e2b50354fc3be75f4cfd1acb54ee773f00faa91526dfbf9e3112fb2a51529e54352b#npm:12.1.5"],\
             ["prettier", "npm:2.6.2"],\
             ["react", "npm:18.0.0"],\
@@ -6124,6 +6126,25 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "packageLocation": "./.yarn/cache/mkdirp-npm-1.0.4-37f6ef56b9-a96865108c.zip/node_modules/mkdirp/",\
           "packageDependencies": [\
             ["mkdirp", "npm:1.0.4"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["moment", [\
+        ["npm:2.29.3", {\
+          "packageLocation": "./.yarn/cache/moment-npm-2.29.3-fe4ba99bae-2e780e36d9.zip/node_modules/moment/",\
+          "packageDependencies": [\
+            ["moment", "npm:2.29.3"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["moment-timezone", [\
+        ["npm:0.5.34", {\
+          "packageLocation": "./.yarn/cache/moment-timezone-npm-0.5.34-e4fe2d01f6-12a1d3d52e.zip/node_modules/moment-timezone/",\
+          "packageDependencies": [\
+            ["moment-timezone", "npm:0.5.34"],\
+            ["moment", "npm:2.29.3"]\
           ],\
           "linkType": "HARD"\
         }]\
