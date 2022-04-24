@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: auto-trade-front
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auto-trade-front
+  template:
+    metadata:
+      labels:
+        app: auto-trade-front
+    spec:
+      containers:
+        - name: auto-trade-front
+          image: byun618/auto-trade-front:0.0.2-pre2
+          args: ['yarn', 'start']
+          resources:
+            requests:
+              cpu: '300m'
+              memory: '500Mi'
+            limits:
+              cpu: '300m'
+              memory: '500Mi'
+      restartPolicy: Always
+      imagePullSecrets:
+        - name: regcred
