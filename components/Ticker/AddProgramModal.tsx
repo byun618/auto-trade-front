@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
+import { Ticker } from '../../lib/types'
 import ConfirmModal, { ModalButtonProps } from '../public/ConfirmModal'
-import TickerIcon from '../public/TickerIcon'
-import { Ticker } from './Ticker'
+import TickerIcon from './TickerIcon'
 
 const TICKER_ICON_SIZE = 50
 

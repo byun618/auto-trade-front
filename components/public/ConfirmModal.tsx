@@ -5,7 +5,7 @@ import Modal from './Modal'
 
 export interface ModalButtonProps {
   text: string
-  onClick: Function
+  onClick: () => void
 }
 
 interface ConfirmModalProps {

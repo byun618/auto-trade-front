@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { FunctionComponent, useEffect, useState } from 'react'
 import Page from '../../components/public/Page'
-import UserProgram from '../../components/UserProgram/UserProgram'
-import { useGlobal } from '../../contexts/global'
-import api from '../../lib/api'
+import UserProgram from '../../components/UserProgram'
+import withToken, { WithTokenProps } from '../../hoc/withToken'
+import { get } from '../../lib/fetcher'
+import { UserProgram as UserProgramType } from '../../lib/types'
 
 const UserProgramList = styled.div`
   display: flex;
@@ -16,36 +16,46 @@ const UserProgramList = styled.div`
   }
 `
 
-const UserProgramPage = () => {
+const UserProgramsPage: FunctionComponent<WithTokenProps> = ({
+  status,
+  loaded,
+}) => {
   const router = useRouter()
-  const { user } = useGlobal()
-  const [userPrograms, setUserPrograms] = useState<any[] | null>(null)
+  const [userPrograms, setUserPrograms] = useState<UserProgramType[]>([])
 
   useEffect(() => {
-    if (user) {
-      fetchUserPrograms()
+    if (loaded) {
+      if (status === 'NOT USER') {
+        alert('로그인이 필요합니다.')
+        router.replace('/login')
+        return
+      } else {
+        fetchUserPrograms()
+      }
     }
-  }, [user])
+  }, [status, loaded])
 
   const fetchUserPrograms = async () => {
-    const { data } = await api.get('/user-programs')
-    setUserPrograms(data)
+    const { data: userPrograms } = await get<UserProgramType[]>(
+      `${process.env.NEXT_PUBLIC_API_URL}/user-programs`,
+    )
+
+    setUserPrograms(userPrograms)
   }
 
-  // TODO: 깜빡거림 방지
   return (
     <Page router={router} headerTitle="내 프로그램">
-      {userPrograms ? (
+      {loaded ? (
         <UserProgramList>
-          {userPrograms.map((userProgram: any, index) => (
+          {userPrograms.map((userProgram, index) => (
             <UserProgram key={index} userProgram={userProgram} />
           ))}
         </UserProgramList>
       ) : (
-        <>로그인이 필요합니다.</>
+        <>로딩중</>
       )}
     </Page>
   )
 }
 
-export default UserProgramPage
+export default withToken(UserProgramsPage)

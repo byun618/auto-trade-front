@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { NextRouter } from 'next/router'
 import { ReactNode, useMemo, useRef } from 'react'
 import { DEFAULT_MARGIN } from '../../lib/constants'
-import Header, { HeaderButtonTypes } from '../public/Header'
+import Header, { HeaderButtonTypes } from './Header'
 import Navbar from './Navbar'
 
 interface PageProps {
@@ -17,7 +17,7 @@ interface PageProps {
   backgroundColor?: string
 }
 
-type ContentProps = Partial<PageProps> & { headerHeight?: any }
+type ContentProps = Partial<PageProps> & { headerHeight?: number }
 
 const Wrapper = styled.div`
   display: flex;
@@ -32,9 +32,7 @@ const Content = styled.div<ContentProps>`
   flex-grow: 1;
   padding: ${({ full }) => (full ? 0 : DEFAULT_MARGIN)}vw;
   margin-top: ${({ headerHeight }) => headerHeight}px;
-  // margin-bottom: ${DEFAULT_MARGIN}vw;
   background-color: ${({ backgroundColor }) => backgroundColor};
-  position: relative;
 `
 
 export default function Page({

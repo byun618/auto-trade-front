@@ -1,52 +1,52 @@
-import NextImage from 'next/image'
+import NextImage, { StaticImageData } from 'next/image'
+import { getImageResizeQueryAddedUrl } from '../../lib/helper/image'
 
-interface ImagePayload {
-  url: string
-  width: number
-  height: number
+interface StaticRequire {
+  default: StaticImageData
 }
 
-interface ImageProps {
-  src?: any
-  url?: string
+type StaticImport = StaticRequire | StaticImageData
+
+interface ImageData {
   alt: string
   width: number
   height: number
   style?: object
 }
 
-/**
- * ncnc-lambda를 이용하여 리사이징된 이미지의 url을 가져옵니다.
- * @param {ImagePayload} imagePayload
- * @returns {string} `url`
- */
-export function getImageResizeQueryAddedUrl({
-  url,
-  width,
-  height,
-}: ImagePayload): string {
-  return `${url}?w=${width * 3}&h=${height * 3}&f=`
+interface ImageSrcProps extends ImageData {
+  src: string | StaticImport
 }
+
+interface ImageUrlProps extends ImageData {
+  url: string
+}
+
+type ImageProps = ImageSrcProps | ImageUrlProps
 
 /**
  * `url`은 반드시 NCNC-BENEFITS 버킷의 CloudFront domain을 사용해야 합니다.
  *
  * 이 외의 주소는 `next.config.js`의 `images.domain` 배열에 추가 후 사용하세요.
  */
-export default function Image({
-  src,
-  url,
-  alt,
-  width,
-  height,
-  style,
-}: ImageProps) {
+export default function Image(imageProps: ImageProps) {
+  const { alt, width, height, style } = imageProps
+
+  let src
+
+  if ('url' in imageProps) {
+    src = getImageResizeQueryAddedUrl({ url: imageProps.url, width, height })
+  } else {
+    src = imageProps.src
+  }
+
   return (
     <NextImage
-      src={url ? getImageResizeQueryAddedUrl({ url, width, height }) : src}
+      src={src}
       alt={alt}
       width={width}
       height={height}
+      style={style}
     />
   )
 }
