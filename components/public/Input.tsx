@@ -7,6 +7,7 @@ export interface InputProps {
   value: string
   placeholder?: string
   onChange: ChangeEventHandler<HTMLInputElement>
+  onKeyUp?: any
 }
 
 const Wrapper = styled.input`

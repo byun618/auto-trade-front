@@ -49,6 +49,12 @@ export default function LoginContainer() {
     setPassword(event.target.value)
   }
 
+  const onKeyUp = ({ key }: KeyboardEvent) => {
+    if (key === 'Enter') {
+      onClickLogin()
+    }
+  }
+
   const onClickLogin = async () => {
     try {
       const { data: token } = await post<string>(
@@ -91,6 +97,7 @@ export default function LoginContainer() {
           value={password}
           placeholder="비밀번호를 입력하세요."
           onChange={onChangePassword}
+          onKeyUp={onKeyUp}
         />
       </LoginInputWrapper>
       <ButtonWrapper>
