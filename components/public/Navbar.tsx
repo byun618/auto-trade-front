@@ -34,6 +34,8 @@ const Wrapper = styled.div<{ headerHeight: number }>`
 const Content = styled(Button)`
   padding: 0 ${DEFAULT_MARGIN}vw;
   font-weight: 400;
+  font-size: 17px;
+  line-height: 20px;
 
   color: #dfdfdf;
 `

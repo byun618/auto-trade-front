@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { GetServerSideProps } from 'next'
 import { useRouter } from 'next/router'
 import { FunctionComponent, useEffect, useState } from 'react'
+import ConfirmModal from '../../components/public/ConfirmModal'
 import Page from '../../components/public/Page'
 import UserProgram from '../../components/UserProgram'
 import ControlButton from '../../components/UserProgram/ControlButton'
@@ -52,6 +53,7 @@ const UserProgramDetailPage: FunctionComponent<UserProgramDetailPageProps> = ({
   const [userProgram, setUserProgram] =
     useState<UserProgramType>(originalUserProgram)
   const [userProgramLogs, setUserProgramLogs] = useState<any[]>([])
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   useEffect(() => {
     connectSocket(`${userProgram?.user.name}-${userProgram?.no}`)
@@ -110,6 +112,14 @@ const UserProgramDetailPage: FunctionComponent<UserProgramDetailPageProps> = ({
     fetch()
   }
 
+  const onClickDeleteUserProgram = async () => {
+    await del(
+      `${process.env.NEXT_PUBLIC_API_URL}/user-programs/${userProgram._id}`,
+    )
+
+    router.replace('/user-programs')
+  }
+
   return (
     <Page router={router} headerTitle="내 프로그램" headerLeft="back">
       {userProgram && (
@@ -129,7 +139,27 @@ const UserProgramDetailPage: FunctionComponent<UserProgramDetailPageProps> = ({
             <ControlButton name="현재가" onClick={onClickCurrentPrice} />
             <ControlButton name="로그 삭제" onClick={onClickDeleteLogs} />
           </ControlButtons>
+          <ControlButtons>
+            <ControlButton
+              name="프로그램 삭제"
+              onClick={() => setIsOpen(true)}
+            />
+          </ControlButtons>
           <UserProgramLogs userProgramLogs={userProgramLogs} />
+          <ConfirmModal
+            isOpen={isOpen}
+            main="삭제하시겠습니까?"
+            buttons={[
+              {
+                text: '취소',
+                onClick: () => setIsOpen(false),
+              },
+              {
+                text: '삭제',
+                onClick: () => onClickDeleteUserProgram(),
+              },
+            ]}
+          />
         </>
       )}
     </Page>
