@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
+import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
-import useCookie from '../../hooks/useCookie'
 import { useSetToken } from '../../hooks/useToken'
 import api from '../../lib/api/api'
-import { CookieValue, set } from '../../lib/helper/cookie'
+import { set } from '../../lib/helper/cookie'
 import Button from '../public/Button'
 import Input from '../public/Input'
 
@@ -69,8 +69,8 @@ const LoginButton = styled(Button)`
 `
 
 export default function Login() {
+  const router = useRouter()
   const setToken = useSetToken()
-  // const [, setCookie] = useCookie('token')
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
@@ -97,8 +97,10 @@ export default function Login() {
         setToken(token)
         set('token', token)
       }
+
+      router.replace('/')
     } catch (err: any) {
-      if (err.message === 'User not Found') {
+      if (err.response?.data?.message === 'User not Found') {
         alert('로그인 정보가 잘못되었습니다.')
       }
     }

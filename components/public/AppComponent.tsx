@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useSetToken } from '../../hooks/useToken'
 import { get } from '../../lib/helper/cookie'
 import Loading from './Loading'
@@ -33,6 +33,7 @@ const AppComponent = ({ Component, pageProps }: AppProps) => {
   const [loaded, setLoaded] = useState<boolean>(false)
 
   useEffect(() => {
+    console.log(cookie)
     if (cookie) {
       setToken(cookie)
     } else {
