@@ -1,6 +1,5 @@
 import type { AppProps } from 'next/app'
 import Head from 'next/head'
-import { useEffect } from 'react'
 import { RecoilRoot } from 'recoil'
 import AppComponent from '../components/public/AppComponent'
 import '../styles/globals.css'

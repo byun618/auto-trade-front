@@ -1,6 +1,8 @@
 import { HeaderProps, HeaderButtonTypes } from '../../lib/types'
 import styled from '@emotion/styled'
 import Arrow from '../../assets/png/arrow-white.png'
+import User from '../../assets/png/user-white.png'
+import Logout from '../../assets/png/logout-white.png'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constatns'
 import Button from './Button'
 import Image from './Image'
@@ -69,8 +71,12 @@ export default function Header({
     router.back()
   }
 
-  const onPressClose = () => {
-    postMessage('close')
+  const onPressMyPage = () => {
+    router.push('/my-page')
+  }
+
+  const onPressLogout = () => {
+    alert('로그아웃 하시겠습니까?')
   }
 
   const renderButtons = (type: HeaderButtonTypes) => {
@@ -82,6 +88,30 @@ export default function Header({
             <Image
               src={Arrow}
               alt="arrow"
+              width={BUTTON_IMAGE_SIZE}
+              height={BUTTON_IMAGE_SIZE}
+            />
+          </HeaderButton>
+        )
+
+      case 'my-page':
+        return (
+          <HeaderButton onClick={onPressMyPage}>
+            <Image
+              src={User}
+              alt="user"
+              width={BUTTON_IMAGE_SIZE}
+              height={BUTTON_IMAGE_SIZE}
+            />
+          </HeaderButton>
+        )
+
+      case 'logout':
+        return (
+          <HeaderButton onClick={onPressLogout}>
+            <Image
+              src={Logout}
+              alt="logout"
               width={BUTTON_IMAGE_SIZE}
               height={BUTTON_IMAGE_SIZE}
             />

@@ -1,5 +1,6 @@
 import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import Login from '../components/MyPage/Login'
 import Page from '../components/public/Page'
 
 const LoginPage: NextPage = () => {
@@ -9,12 +10,13 @@ const LoginPage: NextPage = () => {
     <Page
       header={{
         router,
-        left: 'back',
         title: '로그인',
+        left: 'back',
+        right: 'logout',
       }}
       full
     >
-      dsadasd
+      <Login />
     </Page>
   )
 }

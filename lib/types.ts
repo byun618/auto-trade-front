@@ -1,7 +1,7 @@
 import { NextRouter } from 'next/router'
 import { ReactNode, RefObject } from 'react'
 
-export type HeaderButtonTypes = 'back' | 'close'
+export type HeaderButtonTypes = 'back' | 'my-page' | 'logout'
 
 export interface PageHeaderProps {
   router: NextRouter
