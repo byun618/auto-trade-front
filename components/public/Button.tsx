@@ -33,6 +33,10 @@ const Wrapper = styled.button<Partial<ButtonProps>>`
     opacity: 0.8 !important;
     transform: scale(0.99) !important;
   }
+
+  :disabled {
+    opacity: 0.5 !important;
+  }
 `
 
 const LoadingContainer = styled.div`
@@ -66,19 +70,21 @@ export default function Button(props: CSSProperties & ButtonProps) {
   )
 
   return (
-    <Wrapper
-      onClick={handleClick}
-      disabled={disabled || loading}
-      className={className}
-      style={style}
-    >
-      {loading ? (
-        <LoadingContainer>
-          <Loading width={indicatorSize} height={indicatorSize} />
-        </LoadingContainer>
-      ) : (
-        children
-      )}
-    </Wrapper>
+    <div>
+      <Wrapper
+        onClick={handleClick}
+        disabled={disabled || loading}
+        className={className}
+        style={style}
+      >
+        {loading ? (
+          <LoadingContainer>
+            <Loading width={indicatorSize} height={indicatorSize} />
+          </LoadingContainer>
+        ) : (
+          children
+        )}
+      </Wrapper>
+    </div>
   )
 }

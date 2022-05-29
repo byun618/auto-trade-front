@@ -1,4 +1,4 @@
-import NextImage, { ImageProps, StaticImageData } from 'next/image'
+import NextImage, { StaticImageData } from 'next/image'
 import { getImageResizeQueryAddedUrl } from '../../lib/helper/image'
 
 interface StaticRequire {
@@ -7,40 +7,29 @@ interface StaticRequire {
 
 type StaticImport = StaticRequire | StaticImageData
 
-interface ImageData extends ImageProps {
+interface ImageProps {
+  src?: string | StaticImport
+  url?: string
   alt: string
   width: number
   height: number
   style?: object
 }
 
-interface ImageSrcProps extends ImageData {
-  src: string | StaticImport
-}
-
-interface ImageUrlProps extends ImageData {
-  url: string
-}
-
-type ImageProp = ImageSrcProps | ImageUrlProps
-
-/**
- * `url`은 반드시 NCNC-BENEFITS 버킷의 CloudFront domain을 사용해야 합니다.
- *
- * 이 외의 주소는 `next.config.js`의 `images.domain` 배열에 추가 후 사용하세요.
- */
-export default function Image(imageProps: ImageProp) {
+export default function Image(imageProps: ImageProps) {
   const { alt, width, height, style } = imageProps
 
   let src
 
   if ('url' in imageProps) {
-    src = getImageResizeQueryAddedUrl({ url: imageProps.url, width, height })
+    if (imageProps.url) {
+      src = getImageResizeQueryAddedUrl({ url: imageProps.url, width, height })
+    }
   } else {
     src = imageProps.src
   }
 
-  return (
+  return src ? (
     <NextImage
       src={src}
       alt={alt}
@@ -48,5 +37,7 @@ export default function Image(imageProps: ImageProp) {
       height={height}
       style={style}
     />
+  ) : (
+    <></>
   )
 }

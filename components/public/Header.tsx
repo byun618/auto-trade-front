@@ -3,6 +3,7 @@ import Arrow from '../../assets/png/arrow-white.png'
 import Logout from '../../assets/png/logout-white.png'
 import User from '../../assets/png/user-white.png'
 import { useSetToken } from '../../hooks/useToken'
+import { removeHeaderToken } from '../../lib/api/api'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constatns'
 import { remove } from '../../lib/helper/cookie'
 import { HeaderButtonTypes, HeaderProps } from '../../lib/types'
@@ -82,6 +83,7 @@ export default function Header({
   const onPressLogout = () => {
     remove('token')
     setToken(undefined)
+    removeHeaderToken()
 
     router.replace('/my-page')
   }

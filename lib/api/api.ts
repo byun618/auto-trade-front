@@ -7,4 +7,12 @@ const api: AxiosInstance = axios.create({
   },
 })
 
+export const setHeaderToken = (token: string) => {
+  api.defaults.headers.common['Authorization'] = `Bearer ${token}`
+}
+
+export const removeHeaderToken = () => {
+  delete api.defaults.headers.common['Authorization']
+}
+
 export default api
