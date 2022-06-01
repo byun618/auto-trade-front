@@ -2,11 +2,11 @@ import type { NextPage } from 'next'
 import { useRouter } from 'next/router'
 import Home from '../components/home'
 import Page from '../components/public/Page'
-import { useTokenValue } from '../hooks/useToken'
+import { useGlobal } from '../contexts/global'
 
 const HomePage: NextPage = () => {
   const router = useRouter()
-  const token = useTokenValue()
+  const { token } = useGlobal()
 
   return (
     <Page

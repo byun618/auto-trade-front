@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import { AppProps } from 'next/app'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import useToken, { useSetToken } from '../../hooks/useToken'
+import { useGlobal } from '../../contexts/global'
 import { setHeaderToken } from '../../lib/api/api'
 import { get } from '../../lib/helper/cookie'
 import Loading from './Loading'
@@ -30,7 +30,8 @@ const LoadingPage = styled.div`
 const AppComponent = ({ Component, pageProps }: AppProps) => {
   const router = useRouter()
   const cookie = get('token')
-  const [token, setToken] = useToken()
+  // const [token, setToken] = useToken()
+  const { token, setToken } = useGlobal()
   const [loaded, setLoaded] = useState<boolean>(false)
 
   useEffect(() => {

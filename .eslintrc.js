@@ -7,6 +7,10 @@ module.exports = {
     'plugin:import/typescript',
     'plugin:jest/recommended',
     'plugin:prettier/recommended',
+    '@typescript-eslint/no-empty-function',
   ],
+  rules: {
+    '@typescript-eslint/no-empty-function': 'off',
+  },
   ignorePatterns: ['node_modules/', 'dist/', 'build/', '.yarn/'],
 }

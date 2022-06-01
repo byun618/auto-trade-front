@@ -1,5 +1,7 @@
 import styled from '@emotion/styled'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useGlobal } from '../../contexts/global'
+import useSocket from '../../hooks/useSocket'
 import B from '../public/Button'
 import Section from '../public/Section'
 import Symbol from '../public/Symbol'
@@ -63,6 +65,8 @@ const SymbolStatWrapper = styled.div`
 `
 
 export default function SymbolDetail({ userSymbol }: SymbolDetail) {
+  const { token } = useGlobal()
+
   const [entryPrice, setEntryPrice] = useState<number>(123)
   const [size, setSize] = useState<number>(123)
   const [leverage, setLeverage] = useState<number>(123)

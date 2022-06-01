@@ -2,7 +2,7 @@ import styled from '@emotion/styled'
 import Arrow from '../../assets/png/arrow-white.png'
 import Logout from '../../assets/png/logout-white.png'
 import User from '../../assets/png/user-white.png'
-import { useSetToken } from '../../hooks/useToken'
+import { useGlobal } from '../../contexts/global'
 import { removeHeaderToken } from '../../lib/api/api'
 import { DEFAULT_MARGIN, HEADER_HEIGHT } from '../../lib/constatns'
 import { remove } from '../../lib/helper/cookie'
@@ -70,7 +70,7 @@ export default function Header({
   right,
   headerRef,
 }: HeaderProps) {
-  const setToken = useSetToken()
+  const { setToken } = useGlobal()
 
   const onPressBack = () => {
     router.back()

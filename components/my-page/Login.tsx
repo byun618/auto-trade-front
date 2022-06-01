@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import { ChangeEvent, useState } from 'react'
-import { useSetToken } from '../../hooks/useToken'
+import { useGlobal } from '../../contexts/global'
 import api from '../../lib/api/api'
 import { set } from '../../lib/helper/cookie'
 import Button from '../public/Button'
@@ -70,7 +70,8 @@ const LoginButton = styled(Button)`
 
 export default function Login() {
   const router = useRouter()
-  const setToken = useSetToken()
+  // const setToken = useSetToken()
+  const { setToken } = useGlobal()
 
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
