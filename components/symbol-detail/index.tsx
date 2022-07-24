@@ -8,10 +8,6 @@ import Symbol from '../public/Symbol'
 import PricePannel from './PricePannel'
 import SymbolStat from './SymbolStat'
 
-interface SymbolDetail {
-  userSymbol: any
-}
-
 const HeaderWrapper = styled.div`
   display: flex;
   align-items: center;
@@ -21,12 +17,13 @@ const SymbolWrapper = styled.div`
   flex-grow: 1;
 `
 
-const PnlRoe = styled.div`
+const PnlRoe = styled.div<{ value: number }>`
   font-weight: 600;
   font-size: 14px;
   line-height: 17px;
 
-  color: #62c278;
+  color: ${({ value }) =>
+    value === 0 ? '#7e7e87' : value > 0 ? '#62c278;' : '#d54155'};
 `
 
 const ControlPannel = styled.div`
@@ -64,17 +61,34 @@ const SymbolStatWrapper = styled.div`
   margin-top: 20px;
 `
 
-export default function SymbolDetail({ userSymbol }: SymbolDetail) {
+export default function SymbolDetail() {
   const { token } = useGlobal()
+  const { userSymbol, userSymbolPosition } = useGlobal()
+  const { socket, connect } = useSocket(userSymbol._id, token as string)
 
   const [entryPrice, setEntryPrice] = useState<number>(123)
   const [size, setSize] = useState<number>(123)
-  const [leverage, setLeverage] = useState<number>(123)
   const [liqPrice, setLiqPrice] = useState<number>(123)
   const [margin, setMargin] = useState<number>(123)
 
+  useEffect(() => {
+    connect()
+  }, [])
+
   const test = () => {
     console.log(1)
+  }
+
+  const onClickStart = () => {
+    if (socket) {
+      socket.emit('start')
+    }
+  }
+
+  const onClickStop = () => {
+    if (socket) {
+      socket.emit('stop')
+    }
   }
 
   return (
@@ -83,15 +97,18 @@ export default function SymbolDetail({ userSymbol }: SymbolDetail) {
         <SymbolWrapper>
           <Symbol {...userSymbol.symbol} />
         </SymbolWrapper>
-        <PnlRoe>
-          +0.06 USDT
-          <br />
-          (+11.53%)
+        <PnlRoe value={userSymbolPosition.pnl}>
+          {userSymbolPosition.pnl} USDT
+          <br />({userSymbolPosition.roe}%)
         </PnlRoe>
       </HeaderWrapper>
       <ControlPannel>
-        <Button onClick={test}>시작</Button>
-        <Button onClick={test}>종료</Button>
+        <Button onClick={onClickStart} disabled={userSymbol.started}>
+          시작
+        </Button>
+        <Button onClick={onClickStop} disabled={!userSymbol.started}>
+          종료
+        </Button>
         <Button onClick={test}>수정</Button>
       </ControlPannel>
       <ControlPannel>
@@ -106,11 +123,19 @@ export default function SymbolDetail({ userSymbol }: SymbolDetail) {
         <PricePannel />
       </PrioceWrapper>
       <SymbolStatWrapper>
-        <SymbolStat name="진입 금액" data={entryPrice.toLocaleString()} />
-        <SymbolStat name="사이즈" data={`+${size} EOS`} />
-        <SymbolStat name="레버리지" data={`${leverage}X`} />
-        <SymbolStat name="청산 금액" data={liqPrice.toLocaleString()} />
-        <SymbolStat name="마진" data={`${margin.toLocaleString()} USDT`} />
+        <SymbolStat
+          name="진입 금액"
+          data={userSymbolPosition.entryPrice.toLocaleString()}
+        />
+        <SymbolStat name="사이즈" data={`${userSymbolPosition.size} EOS`} />
+        <SymbolStat
+          name="청산 금액"
+          data={userSymbolPosition.liqPrice.toLocaleString()}
+        />
+        <SymbolStat
+          name="마진"
+          data={`${userSymbolPosition.margin.toLocaleString()} USDT`}
+        />
       </SymbolStatWrapper>
     </Section>
   )

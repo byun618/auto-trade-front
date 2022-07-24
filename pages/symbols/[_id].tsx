@@ -3,13 +3,14 @@ import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import Page from '../../components/public/Page'
 import SymbolDetail from '../../components/symbol-detail'
+import { useGlobal } from '../../contexts/global'
 import api from '../../lib/api/api'
 
 const SymbolPage: NextPage = () => {
   const router = useRouter()
-  const { _id } = router.query
+  const { userSymbol, setUserSymbol } = useGlobal()
 
-  const [userSymbol, setUserSymbol] = useState<any>(null)
+  const { _id } = router.query
 
   useEffect(() => {
     fetchUserSymbol()
@@ -30,7 +31,7 @@ const SymbolPage: NextPage = () => {
       }}
       full
     >
-      {userSymbol ? <SymbolDetail userSymbol={userSymbol} /> : <></>}
+      {userSymbol ? <SymbolDetail /> : <></>}
     </Page>
   )
 }

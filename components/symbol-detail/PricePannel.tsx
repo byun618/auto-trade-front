@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { useGlobal } from '../../contexts/global'
 
 const Wrapper = styled.div`
   display: flex;
@@ -8,10 +9,8 @@ const Wrapper = styled.div`
   border-radius: 20px;
 `
 
-const Profit = styled.div`
-  padding-top: 14px;
-  padding-right: 14px;
-
+const Header = styled.div`
+  display: flex;
   text-align: right;
 
   font-weight: 600;
@@ -19,6 +18,12 @@ const Profit = styled.div`
   line-height: 14px;
 
   color: #dfdfdf;
+
+  padding: 10px;
+
+  & > :not(:first-of-type) {
+    margin-left: 10px;
+  }
 `
 
 const BarWrapper = styled.div`
@@ -91,24 +96,30 @@ const High = styled.div`
 `
 
 export default function PricePannel() {
+  const { userSymbol, userSymbolPosition } = useGlobal()
+
   return (
     <Wrapper>
-      <Profit>1.25%</Profit>
+      <Header>
+        <div>{userSymbol.leverage}X</div>
+        <div>{userSymbol.profit}%</div>
+      </Header>
+
       <BarWrapper>
         <Bar>
           <Pointer background="#62c278">
-            <PointerValue>31878.5</PointerValue>
+            <PointerValue>{userSymbol.longTarget}</PointerValue>
           </Pointer>
           <Pointer background="#e0b024">
-            <PointerValue bottom>31878.5</PointerValue>
+            <PointerValue bottom>{userSymbolPosition.markPrice}</PointerValue>
           </Pointer>
           <Pointer background="#d54155">
-            <PointerValue>31878.5</PointerValue>
+            <PointerValue>{userSymbol.shortTarget}</PointerValue>
           </Pointer>
         </Bar>
         <HighNLow>
-          <Low>31878.5</Low>
-          <High>31878.5</High>
+          <Low>{userSymbol.low}</Low>
+          <High>{userSymbol.high}</High>
         </HighNLow>
       </BarWrapper>
     </Wrapper>
